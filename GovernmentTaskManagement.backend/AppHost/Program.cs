@@ -1,5 +1,4 @@
-
-namespace GovernmentTaskManagement.backend
+namespace GovernmentTaskManagement.Api.AppHost
 {
     public class Program
     {
@@ -25,6 +24,7 @@ namespace GovernmentTaskManagement.backend
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
 

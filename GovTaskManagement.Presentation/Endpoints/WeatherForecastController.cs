@@ -1,6 +1,7 @@
+using GovernmentTaskManagement.backend.Domain;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GovernmentTaskManagement.backend.Controllers
+namespace GovernmentTaskManagement.backend.Web.Endpoints
 {
     [ApiController]
     [Route("[controller]")]

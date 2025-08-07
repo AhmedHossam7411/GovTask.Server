@@ -9,6 +9,11 @@ namespace GovernmentTaskManagement.backend.Data
 {
     public class toolDbContext(DbContextOptions<toolDbContext> options) : IdentityDbContext<IdentityUser>(options) // identity enables us to use ASPNET USER AND ROLES tables for auth and authorization
     {
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(toolDbContext).Assembly);
+        }
     }
 }
