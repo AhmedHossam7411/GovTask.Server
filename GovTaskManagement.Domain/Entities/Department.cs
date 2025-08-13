@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Domain.Entities
 {
-    internal class Department
+    public class Department
     {
         public int departmentId { get; set; }
         public string departmentName { get; set; }

@@ -15,8 +15,8 @@ namespace GovTaskManagement.Domain.Entities
         [Required]
         public string userEmail { get; set; }
 
-        Task Task { get; set; }   // Navigation property to Task assigned to user
-        List<Task> Tasks { get; set; }  
+        TaskEntity Task { get; set; }   // Navigation property to Task assigned to user
+        List<TaskEntity> Tasks { get; set; }  
 
     }
 }

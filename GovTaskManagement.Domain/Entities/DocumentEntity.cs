@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Domain.Entities
 {
-    internal class Document
+    public class DocumentEntity
     {
         public int documentId { get; set; }
         public string documentName { get; set; }
