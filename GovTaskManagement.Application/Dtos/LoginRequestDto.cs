@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Dtos
 {
-    internal class LoginRequestDto
+    public class LoginRequestDto
     {
         [Required] [EmailAddress]
         public string email { get; set; }

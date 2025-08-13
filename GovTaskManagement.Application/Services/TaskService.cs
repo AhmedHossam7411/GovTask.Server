@@ -6,7 +6,21 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Services
 {
-    internal class TaskService
+    public class TaskService : ITaskService
     {
+        public Task<bool> createTask()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> deleteTask()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> updateTask()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using GovTaskManagement.Domain.Entities;
 
-namespace GovTaskManagement.Application.Interfaces
+namespace GovTaskManagement.Application.Interfaces.Repositories
 {
     public interface IDepartmentRepository : IGenericRepository<Department>
     {

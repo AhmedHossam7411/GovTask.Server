@@ -6,7 +6,21 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Services
 {
-    internal class DocumentService
+    public class DocumentService : IDocumentService
     {
+        public Task<bool> createDocument()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> deleteDocument()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> updateDocument()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

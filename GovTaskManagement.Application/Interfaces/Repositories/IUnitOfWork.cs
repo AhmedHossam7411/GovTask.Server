@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GovTaskManagement.Application.Interfaces
+namespace GovTaskManagement.Application.Interfaces.Repositories
 {
-    internal interface IUnitOfWork : IDisposable // repository wrapper interface 
+    public interface IUnitOfWork : IDisposable // repository wrapper interface 
     {
         public ITaskRepository TasksRepository { get; } 
-        public IDocumentRepository DocumentRespository { get; }
+        public IDocumentRepository DocumentRepository { get; }
         public IDepartmentRepository DepartmentRepository { get; }
 
         Task<int> SaveChangesAsync();  // Method to save changes asynchronously

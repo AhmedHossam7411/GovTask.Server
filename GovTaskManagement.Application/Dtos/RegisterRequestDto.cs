@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Dtos
 {
-    internal class RegisterRequestDto
+    public class RegisterRequestDto
     {
         [Required]
         public string userName { get; set; }

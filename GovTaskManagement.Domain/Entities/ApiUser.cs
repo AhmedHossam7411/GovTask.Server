@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Domain.Entities
 {
-    internal class ApiUser : IdentityUser
+    public class ApiUser : IdentityUser
     {
-        public int userId { get; set; }
+        public int userId { get; set; }  // primary key , auto generated upon new user registeration
         public string userName { get; set; } 
         [Required]
         public string userEmail { get; set; }

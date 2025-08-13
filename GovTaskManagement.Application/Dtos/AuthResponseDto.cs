@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Dtos
 {
-    internal class AuthResponseDto
+    public class AuthResponseDto
     {
         public string UserName { get; set; }
         public string token { get; set; }
