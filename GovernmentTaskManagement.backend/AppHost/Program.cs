@@ -1,4 +1,4 @@
-namespace GovernmentTaskManagement.Api.AppHost
+namespace GovTaskManagement.Api.AppHost
 {
     public class Program
     {

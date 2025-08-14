@@ -13,8 +13,8 @@ namespace GovTaskManagement.Domain.Entities
         public string taskDescription { get; set; }
         public DateTime taskDueDate { get; set; }
 
-        DocumentEntity Document { get; set; }  // Navigation property to Document associated with the task
-        List<DocumentEntity> Documents { get; set; } 
+        public DocumentEntity Document { get; set; }  // Navigation property to Document associated with the task
+        public List<DocumentEntity> Documents { get; set; } 
 
 
 

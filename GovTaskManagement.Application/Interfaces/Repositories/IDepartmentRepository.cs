@@ -2,10 +2,10 @@
 
 namespace GovTaskManagement.Application.Interfaces.Repositories
 {
-    public interface IDepartmentRepository : IGenericRepository<Department>
+    public interface IDepartmentRepository : IGenericRepository<DepartmentEntity>
     {
-        Task<IEnumerable<Department>> GetDepartmentsByTaskId(int taskId);
-        Task<IEnumerable<Department>> GetDepartmentsByDocumentId(int documentId);
-        Task<IEnumerable<Department>> GetDepartmentsByUserId(int userId);
+        Task<IEnumerable<DepartmentEntity>> GetDepartmentsByTaskId(int taskId);
+        Task<IEnumerable<DepartmentEntity>> GetDepartmentsByDocumentId(int documentId);
+        Task<IEnumerable<DepartmentEntity>> GetDepartmentsByUserId(int userId);
     }
 }

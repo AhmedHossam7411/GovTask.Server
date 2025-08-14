@@ -1,12 +1,5 @@
-﻿using GovernmentTaskManagement.backend.Data;
-using GovTaskManagement.Application.Interfaces.Repositories;
-using GovTaskManagement.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Infrastructure.Data;
 
 namespace GovTaskManagement.Infrastructure.Repositories
 {
