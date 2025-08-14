@@ -12,6 +12,8 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         public IDocumentRepository DocumentRepository { get; }
 
+        public IUserRepository UserRepository {  get; }
+
         public UnitOfWork(
            toolDbContext context,
            ITaskRepository taskRepository,

@@ -20,6 +20,11 @@ namespace GovTaskManagement.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(toolDbContext).Assembly);
+
+            modelBuilder.Entity<ApiUser>()
+             .HasMany(u => u.Tasks)
+              .WithMany(t => t.Users)
+               .UsingEntity(j => j.ToTable("Users-Tasks"));
         }
     }
 }

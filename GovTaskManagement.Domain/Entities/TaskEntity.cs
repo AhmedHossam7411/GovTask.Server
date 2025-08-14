@@ -14,8 +14,9 @@ namespace GovTaskManagement.Domain.Entities
         public DateTime taskDueDate { get; set; }
 
         public DocumentEntity Document { get; set; }  // Navigation property to Document associated with the task
-        public List<DocumentEntity> Documents { get; set; } 
+        public List<DocumentEntity> Documents { get; set; }
 
+        public ICollection<ApiUser> Users { get; set; } = new List<ApiUser>();
 
 
     }

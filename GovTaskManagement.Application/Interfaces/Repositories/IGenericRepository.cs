@@ -6,7 +6,7 @@ namespace GovTaskManagement.Application.Interfaces.Repositories
     {
         Task<T> GetAsync(int id );
         Task<IEnumerable<T>> GetAllAsync();
-        Task UpdateAsync (T entity);  
+        T UpdateAsync (T entity);  
         Task  DeleteAsync (int id); 
         Task<bool> ExistsAsync (int id);
     }

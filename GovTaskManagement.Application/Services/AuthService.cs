@@ -12,17 +12,17 @@ namespace GovTaskManagement.Application.Services
 {
     public class AuthService : IAuthService
     {
-        
+        private IUnitOfWork _unitOfWork;
         private IUserRepository _userRepository;
         public async Task<bool> LoginAsync(LoginRequestDto loginDto)
         {
             try
             {
-                var userExists = await _userRepository. SearchByEmailAsync(loginDto.email);
+                var userExists = await _unitOfWork.UserRepository.SearchByEmailAsync(loginDto.email);
                 if (userExists == null)
                     return false; // User does not exist
 
-                var logged = await _userRepository.CheckPasswordAsync(userExists, loginDto.password);
+                var logged = await _unitOfWork.UserRepository.CheckPasswordAsync(userExists, loginDto.password);
                 return logged; // Return true if password matches
             }
             catch (Exception)
@@ -35,7 +35,7 @@ namespace GovTaskManagement.Application.Services
         {
             try
             {
-                var existingUser = _userRepository.SearchByEmailAsync(registerDto.email);
+                var existingUser = _unitOfWork.UserRepository.SearchByEmailAsync(registerDto.email);
                 if (existingUser != null )
                 {
                     return false; // User already exists
@@ -46,7 +46,7 @@ namespace GovTaskManagement.Application.Services
                     Email = registerDto.email,
                     
                 };
-                var result = await _userRepository.CreateUserAsync(user, registerDto.password);
+                var result = await _unitOfWork.UserRepository.CreateUserAsync(user, registerDto.password);
                 return result;
             }
             catch (Exception)
