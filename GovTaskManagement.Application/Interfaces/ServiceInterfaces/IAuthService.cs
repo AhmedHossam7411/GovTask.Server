@@ -1,12 +1,13 @@
 ﻿using GovTaskManagement.Application.Dtos;
+using Microsoft.AspNetCore.Identity;
 
 namespace GovTaskManagement.Application.Services
 {
-    internal interface IAuthService
+    public interface IAuthService
     {
         // Define methods for authentication and authorization
         public Task<bool> LoginAsync(LoginRequestDto loginDto);
-        public Task<bool> RegisterAsync(RegisterRequestDto registerDto);
+        public Task<IdentityResult> RegisterAsync(RegisterRequestDto registerDto);
         //Task<bool> LogoutAsync(string token);
         
     }

@@ -1,4 +1,5 @@
 using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Application.Services;
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;
 using GovTaskManagement.Infrastructure.Repositories;
@@ -21,6 +22,8 @@ namespace GovTaskManagement.Api.AppHost
             builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            builder.Services.AddScoped<IAuthService, AuthService>();
 
             builder.Services.AddIdentity<ApiUser, IdentityRole>()
             .AddEntityFrameworkStores<toolDbContext>()

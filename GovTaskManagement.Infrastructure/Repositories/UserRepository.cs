@@ -18,7 +18,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         public UserRepository(UserManager<ApiUser> _userManager , toolDbContext _context) : base(_context)
         {
-            _userManager = _userManager;
+            userManager = _userManager;
             context = _context;
         }
 
@@ -28,10 +28,10 @@ namespace GovTaskManagement.Infrastructure.Repositories
             return await userManager.CheckPasswordAsync(user, password);
         }
 
-        public async Task<bool> CreateUserAsync(ApiUser user, string password )
+        public async Task<IdentityResult> CreateUserAsync(ApiUser user, string password )
         {
-           await userManager.CreateAsync(user, password);
-            return true;
+           return await userManager.CreateAsync(user, password);
+            
         }
 
         public async Task DeleteAsync(int id)

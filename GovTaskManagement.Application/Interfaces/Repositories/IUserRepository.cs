@@ -1,4 +1,5 @@
 ﻿using GovTaskManagement.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace GovTaskManagement.Application.Interfaces.Repositories
@@ -8,6 +9,6 @@ namespace GovTaskManagement.Application.Interfaces.Repositories
     
         Task<ApiUser> SearchByEmailAsync(string email);
         Task<bool> CheckPasswordAsync(ApiUser user,string password);
-        Task<bool> CreateUserAsync(ApiUser user, string password);
+        Task<IdentityResult> CreateUserAsync(ApiUser user, string password);
     }
 }

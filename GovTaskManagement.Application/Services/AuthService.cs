@@ -12,17 +12,23 @@ namespace GovTaskManagement.Application.Services
 {
     public class AuthService : IAuthService
     {
-        private IUnitOfWork _unitOfWork;
-        private IUserRepository _userRepository;
+        private IUnitOfWork UnitOfWork;
+        private IUserRepository UserRepository;
+
+        public AuthService(IUnitOfWork _unitOfWork , IUserRepository _userRepository)
+        {
+            UnitOfWork = _unitOfWork;
+            UserRepository = _userRepository;
+        }
         public async Task<bool> LoginAsync(LoginRequestDto loginDto)
         {
             try
             {
-                var userExists = await _unitOfWork.UserRepository.SearchByEmailAsync(loginDto.email);
+                var userExists = await UnitOfWork.UserRepository.SearchByEmailAsync(loginDto.email);
                 if (userExists == null)
                     return false; // User does not exist
 
-                var logged = await _unitOfWork.UserRepository.CheckPasswordAsync(userExists, loginDto.password);
+                var logged = await UnitOfWork.UserRepository.CheckPasswordAsync(userExists, loginDto.password);
                 return logged; // Return true if password matches
             }
             catch (Exception)
@@ -31,14 +37,17 @@ namespace GovTaskManagement.Application.Services
                 throw;
             }
         }
-        public async Task<bool> RegisterAsync(RegisterRequestDto registerDto)
+        public async Task<IdentityResult> RegisterAsync(RegisterRequestDto registerDto)
         {
             try
             {
-                var existingUser = _unitOfWork.UserRepository.SearchByEmailAsync(registerDto.email);
+                var existingUser = await UnitOfWork.UserRepository.SearchByEmailAsync(registerDto.email);
                 if (existingUser != null )
                 {
-                    return false; // User already exists
+                    return IdentityResult.Failed(new IdentityError
+                    {
+                        Description = "User already exists."
+                    }); // User already exists
                 }
                 var user = new ApiUser
                 {
@@ -46,8 +55,19 @@ namespace GovTaskManagement.Application.Services
                     Email = registerDto.email,
                     
                 };
-                var result = await _unitOfWork.UserRepository.CreateUserAsync(user, registerDto.password);
+                var result = await UnitOfWork.UserRepository.CreateUserAsync(user, registerDto.password);
+
+                if (!result.Succeeded)
+                {
+                    
+                    foreach (var error in result.Errors)
+                    {
+                        Console.WriteLine(error.Description);
+                    }
+                }
+
                 return result;
+
             }
             catch (Exception)
             {
