@@ -8,13 +8,15 @@ namespace GovTaskManagement.Domain.Entities
 {
     public class TaskEntity
     {
-        public int taskId { get; set; }
-        public string taskName { get; set; }
-        public string taskDescription { get; set; }
-        public DateTime taskDueDate { get; set; }
+        public int Id { get; set; }
+        public string TaskName { get; set; }
+        public string TaskDescription { get; set; }
+        public DateTime TaskDueDate { get; set; }
 
-        public DocumentEntity Document { get; set; }  // Navigation property to Document associated with the task
-        public List<DocumentEntity> Documents { get; set; }
+        public int DepartmentId { get; set; }          // FK
+        public DepartmentEntity Department { get; set; }  // Navigation
+
+        public List<DocumentEntity> Documents { get; set; } = new List<DocumentEntity>();
 
         public ICollection<ApiUser> Users { get; set; } = new List<ApiUser>();
 

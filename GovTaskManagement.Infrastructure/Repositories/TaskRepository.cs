@@ -22,22 +22,22 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         public async Task<IEnumerable<TaskEntity>?> GetTasksByDepartmentId(int departmentId)
         {
-            var department = await context.Departments.Include(d => d.tasks)
-                .FirstOrDefaultAsync(d => d.departmentId == departmentId);
-            return department?.tasks;
+            var department = await context.Departments.Include(d => d.Tasks)
+                .FirstOrDefaultAsync(d => d.Id == departmentId);
+            return department?.Tasks;
         }
 
         public async Task<TaskEntity?> GetTaskByDocumentId(int documentId)
         {
             return await context.Tasks.Include(t => t.Documents)
-                .FirstOrDefaultAsync(t => t.Documents.Any(d => d.documentId == documentId));
+                .FirstOrDefaultAsync(t => t.Documents.Any(d => d.Id == documentId));
 
         }
 
         public async Task<IEnumerable<TaskEntity>> GetTasksByUserId(int userId)
         {
             var tasks = await context.Tasks.Include(t => t.Users)
-                .Where(u => u.Users.Any(u => u.userId == userId))
+                .Where(u => u.Users.Any(u => u.Id == userId))
                 .ToListAsync();
             return tasks;
         }

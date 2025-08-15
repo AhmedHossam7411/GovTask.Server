@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GovTaskManagement.Application.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,21 +7,15 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Services
 {
-    internal class DepartmentService : IDepartmentService
+    public class DepartmentService : IDepartmentService
     {
-        public Task<bool> createDepartment()
-        {
-            throw new NotImplementedException();
+        private readonly IDepartmentRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
+        public DepartmentService(IDepartmentRepository DepartmentRepository , IUnitOfWork UnitOfWork) 
+        { 
+          _repository = DepartmentRepository;
+            _unitOfWork = UnitOfWork;
         }
-
-        public Task<bool> deleteDepartment()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> updateDepartment()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

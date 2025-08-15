@@ -10,15 +10,17 @@ namespace GovTaskManagement.Domain.Entities
 {
     public class ApiUser : IdentityUser
     {
-        public int userId { get; set; }  // primary key , auto generated upon new user registeration
-        public string userName { get; set; } 
+        public int Id { get; set; }  // primary key , auto generated upon new user registeration
+        //public string userName { get; set; } 
         [Required]
         public string userEmail { get; set; }
 
-        public DocumentEntity DocumentEntity { get; set; }
-        public List<DocumentEntity> Documents { get; set; }
+        
 
         public ICollection<TaskEntity> Tasks { get; set; } = new List<TaskEntity>();
+
+        public int DepartmentId { get; set; }
+        public DepartmentEntity? Department { get; set; }
 
     }
 }
