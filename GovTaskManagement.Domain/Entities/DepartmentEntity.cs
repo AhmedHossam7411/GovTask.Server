@@ -11,7 +11,7 @@ namespace GovTaskManagement.Domain.Entities
         public int Id { get; set; }
 
         
-        public string departmentName { get; set; }
+        public string Name { get; set; }
 
         public ApiUser ApiUser { get; set; }  // Navigation property to User associated with the department
         public List<ApiUser> Users { get; set; }  // Navigation property to Users associated with the department

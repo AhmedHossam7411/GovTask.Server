@@ -9,9 +9,9 @@ namespace GovTaskManagement.Domain.Entities
     public class TaskEntity
     {
         public int Id { get; set; }
-        public string TaskName { get; set; }
-        public string TaskDescription { get; set; }
-        public DateTime TaskDueDate { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime DueDate { get; set; }
 
         public int DepartmentId { get; set; }          // FK
         public DepartmentEntity Department { get; set; }  // Navigation

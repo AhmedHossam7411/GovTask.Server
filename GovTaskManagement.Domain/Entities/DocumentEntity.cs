@@ -9,9 +9,9 @@ namespace GovTaskManagement.Domain.Entities
     public class DocumentEntity
     {
         public int Id { get; set; }
-        public string documentName { get; set; }
-        public string documentDescription { get; set; }
-        public DateTime documentUploadDate { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime UploadDate { get; set; }
 
         // FK
         public int TaskId { get; set; }

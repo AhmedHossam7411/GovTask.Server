@@ -122,7 +122,7 @@ namespace GovTaskManagement.Infrastructure.Migrations
                     b.Property<int>("TaskEntityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("departmentName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -152,15 +152,15 @@ namespace GovTaskManagement.Infrastructure.Migrations
                     b.Property<int>("TaskId")
                         .HasColumnType("int");
 
-                    b.Property<string>("documentDescription")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("documentName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("documentUploadDate")
+                    b.Property<DateTime>("UploadDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -183,14 +183,14 @@ namespace GovTaskManagement.Infrastructure.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TaskDescription")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("TaskDueDate")
+                    b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("TaskName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
