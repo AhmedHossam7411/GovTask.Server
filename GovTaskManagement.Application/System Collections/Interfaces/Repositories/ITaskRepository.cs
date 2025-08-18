@@ -8,5 +8,8 @@ namespace GovTaskManagement.Application.Interfaces.Repositories
         Task<TaskEntity> GetTaskByDocumentId(int documentId);
         Task<IEnumerable<TaskEntity>> GetTasksByUserId(int userId);
 
+        Task<TaskEntity> GetTaskByTaskId(int TaskId);
+        
+        
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,20 +10,52 @@ namespace GovTaskManagement.Application.Services
 {
     public class TaskService : ITaskService
     {
-        public Task<bool> createTask()
-        {
+        private IUnitOfWork UnitOfWork;
+        private ITaskRepository TaskRepository;
 
+        public TaskService(IUnitOfWork _unitOfWork, ITaskRepository _taskRepository)
+        {
+            UnitOfWork = _unitOfWork;
+            TaskRepository = _taskRepository;
+        }
+        public async Task<TaskEntity> CreateTask(TaskEntity entity)
+        {
+            return await UnitOfWork.TasksRepository.CreateAsync(entity);
         }
 
 
-        public Task<bool> deleteTask()
+        public async Task<bool> DeleteTask(int taskId)
         {
-            throw new NotImplementedException();
+
+            var result = await UnitOfWork.TasksRepository.DeleteAsync(taskId);
+            if (result)
+                return true;
+            return false;
         }
 
-        public Task<bool> updateTask()
+        public Task<IEnumerable<TaskEntity>> GetAllTasks()
         {
-            throw new NotImplementedException();
+            return UnitOfWork.TasksRepository.GetAllAsync();
+        }
+
+        public async Task<TaskEntity> GetTaskByDocumentId(int TaskId)
+        {
+            return await UnitOfWork.TasksRepository.GetTaskByDocumentId(TaskId);
+        }
+
+        public async Task<TaskEntity> GetTaskById(int taskId)
+        {
+            return await UnitOfWork.TasksRepository.GetTaskByTaskId(taskId);
+        }
+
+        public async Task<TaskEntity> UpdateTask(TaskEntity entity)
+        {
+            return await UnitOfWork.TasksRepository.UpdateAsync(entity);
+        }
+
+        public Task<IEnumerable<TaskEntity>> GetTasksByDepartmentId(int departmentId)
+        {
+            return UnitOfWork.TasksRepository.GetTasksByDepartmentId(departmentId);
         }
     }
 }

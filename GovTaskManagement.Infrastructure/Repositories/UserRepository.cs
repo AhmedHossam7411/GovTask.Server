@@ -2,6 +2,7 @@
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,13 @@ namespace GovTaskManagement.Infrastructure.Repositories
     public class UserRepository : GenericRepository<ApiUser> , IUserRepository
     {
         private readonly UserManager<ApiUser> userManager;
-        private readonly toolDbContext context;
-
+        private readonly DbContext context;
 
         public UserRepository(UserManager<ApiUser> _userManager , toolDbContext _context) : base(_context)
         {
             userManager = _userManager;
             context = _context;
+            ;
         }
 
 
@@ -34,25 +35,29 @@ namespace GovTaskManagement.Infrastructure.Repositories
             
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteUserAsync(ApiUser user)
         {
-            var user = await GetAsync(id);
-            if (user != null)
-                await userManager.DeleteAsync(user);
+           
+            var deleted = await userManager.DeleteAsync(user);
+            if (deleted.Succeeded)
+            { 
+                return true;
+            }
+            return false;
         }
 
-        public async Task<bool> ExistsAsync(int id)
+        public override async Task<bool> ExistsAsync(int id)
         {
             var user = await GetAsync(id);
             return user != null;
         }
 
-        public async Task<IEnumerable<ApiUser>> GetAllAsync()
+        public override async Task<IEnumerable<ApiUser>> GetAllAsync()
         {
             return userManager.Users;
         }
 
-        public async Task<ApiUser> GetAsync(int id)
+        public override async Task<ApiUser> GetAsync(int id)
         {
             return await userManager.FindByIdAsync(id.ToString());
         }
@@ -62,9 +67,10 @@ namespace GovTaskManagement.Infrastructure.Repositories
             return await userManager.FindByEmailAsync(email);
         }
 
-        public async Task UpdateAsync(ApiUser entity)
+        public async Task<string> UpdateUserAsync(ApiUser entity)
         {
             await userManager.UpdateAsync(entity);
+            return entity.ConcurrencyStamp;
         }
     }
 }

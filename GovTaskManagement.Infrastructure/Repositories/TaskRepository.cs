@@ -13,11 +13,12 @@ namespace GovTaskManagement.Infrastructure.Repositories
     public class TaskRepository : GenericRepository<TaskEntity>, ITaskRepository
     {
         private readonly toolDbContext context;
+        
 
         public TaskRepository(toolDbContext _context) : base(_context)
         {
             context = _context;
-
+            
         }
 
         public async Task<IEnumerable<TaskEntity>?> GetTasksByDepartmentId(int departmentId)
@@ -40,6 +41,12 @@ namespace GovTaskManagement.Infrastructure.Repositories
                 .Where(u => u.Users.Any(u => u.Id == userId))
                 .ToListAsync();
             return tasks;
+        }
+
+        public async Task<TaskEntity?> GetTaskByTaskId(int TaskId)
+        {
+            var task = await context.Tasks.FindAsync(TaskId);
+            return task;
         }
     }
 }

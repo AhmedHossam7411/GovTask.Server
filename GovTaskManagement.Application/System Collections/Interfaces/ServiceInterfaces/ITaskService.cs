@@ -4,11 +4,14 @@ namespace GovTaskManagement.Application.Services
 {
     public interface ITaskService
     {
-        Task<bool> CreateTask();
-        Task<bool> UpdateTask();
-        Task<bool> DeleteTask();
+        Task <TaskEntity> CreateTask(TaskEntity entity);
+        
+        Task<bool> DeleteTask(int taskId);
 
-        Task <TaskEntity> GetTaskById(int  taskId);
-        Task<IEnumerable<TaskEntity>> GetAllTasks(int taskId);
+        Task<TaskEntity> UpdateTask(TaskEntity entity);
+        Task <TaskEntity> GetTaskById(int taskId);
+        Task<IEnumerable<TaskEntity>> GetAllTasks();
+        Task<TaskEntity> GetTaskByDocumentId(int documentId);
+        Task <IEnumerable<TaskEntity>> GetTasksByDepartmentId(int departmentId);
     }
 }

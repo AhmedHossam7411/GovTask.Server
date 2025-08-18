@@ -7,13 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Infrastructure.Repositories;
 
 namespace GovTaskManagement.Application.Services
 {
     public class AuthService : IAuthService
     {
-        private IUnitOfWork UnitOfWork;
-        private IUserRepository UserRepository;
+        private readonly IUnitOfWork UnitOfWork;
+        private readonly IUserRepository UserRepository;
 
         public AuthService(IUnitOfWork _unitOfWork , IUserRepository _userRepository)
         {
@@ -26,10 +27,10 @@ namespace GovTaskManagement.Application.Services
             {
                 var userExists = await UnitOfWork.UserRepository.SearchByEmailAsync(loginDto.email);
                 if (userExists == null)
-                    return false; // User does not exist
+                    return false; 
 
                 var logged = await UnitOfWork.UserRepository.CheckPasswordAsync(userExists, loginDto.password);
-                return logged; // Return true if password matches
+                return logged; 
             }
             catch (Exception)
             {

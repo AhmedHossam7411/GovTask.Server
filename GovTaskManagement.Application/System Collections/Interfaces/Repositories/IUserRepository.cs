@@ -1,14 +1,16 @@
 ﻿using GovTaskManagement.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
-
-namespace GovTaskManagement.Application.Interfaces.Repositories
+namespace GovTaskManagement.Infrastructure.Repositories
 {
-    public interface IUserRepository : IGenericRepository<ApiUser>
+    public interface IUserRepository
     {
-    
-        Task<ApiUser> SearchByEmailAsync(string email);
-        Task<bool> CheckPasswordAsync(ApiUser user,string password);
+        Task<bool> CheckPasswordAsync(ApiUser user, string password);
+
         Task<IdentityResult> CreateUserAsync(ApiUser user, string password);
+
+        Task<ApiUser> SearchByEmailAsync(string email);
+
+        Task<String> UpdateUserAsync(ApiUser entity);  
     }
 }

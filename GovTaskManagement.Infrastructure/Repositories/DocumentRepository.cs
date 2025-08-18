@@ -10,11 +10,12 @@ namespace GovTaskManagement.Infrastructure.Repositories
     public class DocumentRepository :  GenericRepository<DocumentEntity> , IDocumentRepository
     {
         private readonly toolDbContext context;
+        
 
         public DocumentRepository(toolDbContext _context) : base(_context) 
         {
             context = _context;
-
+            
         }
 
         public async Task<IEnumerable<DocumentEntity>?> GetDocumentsByTaskId(int taskID)

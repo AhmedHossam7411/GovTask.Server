@@ -24,6 +24,7 @@ namespace GovTaskManagement.Api.AppHost
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<ITaskService, TaskService>();
 
             builder.Services.AddIdentity<ApiUser, IdentityRole>()
             .AddEntityFrameworkStores<toolDbContext>()

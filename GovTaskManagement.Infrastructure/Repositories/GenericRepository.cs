@@ -13,40 +13,50 @@ namespace GovTaskManagement.Infrastructure.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     {
-    private readonly toolDbContext context;
+        private readonly toolDbContext context;
 
-    public GenericRepository(toolDbContext _context)
-    {
-        context = _context;
 
-    }
-    public async Task DeleteAsync(int id)
-       {
-        var entity = await GetAsync(id);
-        if (entity != null)
+        public GenericRepository(toolDbContext _context)
         {
-            context.Set<T>().Remove(entity);
+            context = _context;
         }
+
+        public virtual async Task<T> CreateAsync(T entity)
+        {
+            await context.Set<T>().AddAsync(entity);
+
+            return entity;
         }
-        public async Task<bool> ExistsAsync(int id)
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var entity = await GetAsync(id);
+            if (entity != null)
+            {
+                context.Set<T>().Remove(entity);
+                return true;
+            }
+            return false;
+        }
+        public virtual async Task<bool> ExistsAsync(int id)
         {
             return await context.Set<T>().FindAsync(id) != null;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await context.Set<T>().ToListAsync();    
+            return await context.Set<T>().ToListAsync();
         }
 
-        public async Task<T?> GetAsync(int id)
+        public virtual async Task<T?> GetAsync(int id)
         {
-           return await context.Set<T>().FindAsync(id);
+            return await context.Set<T>().FindAsync(id);
         }
 
-        public T UpdateAsync(T entity)
+        public virtual async Task<T> UpdateAsync(T entity)
         {
-             var updated = context.Set<T>().Update(entity);
-             return updated.Entity;
+            var updated = context.Set<T>().Update(entity);
+            return updated.Entity;
         }
     }
 }
