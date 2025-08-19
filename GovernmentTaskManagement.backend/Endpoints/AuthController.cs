@@ -1,7 +1,7 @@
-﻿using GovTaskManagement.Application.Dtos;
-using GovTaskManagement.Application.Services;
+﻿using GovTaskManagement.Application.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using GovTaskManagement.Application.Dtos;
 
 namespace GovernmentTaskManagement.Api.Endpoints
 {

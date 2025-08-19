@@ -13,8 +13,8 @@ namespace GovTaskManagement.Domain.Entities
         public string Description { get; set; }
         public DateTime DueDate { get; set; }
 
-        public int DepartmentId { get; set; }          // FK
-        public DepartmentEntity Department { get; set; }  // Navigation
+        public int? DepartmentId { get; set; }          
+        public DepartmentEntity? Department { get; set; } 
 
         public List<DocumentEntity> Documents { get; set; } = new List<DocumentEntity>();
 

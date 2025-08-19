@@ -1,4 +1,7 @@
-﻿using GovTaskManagement.Application.Interfaces.Repositories;
+﻿
+using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Application.System_Collections.Dtos;
+using GovTaskManagement.Application.System_Collections.Mappers;
 using GovTaskManagement.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,15 +15,19 @@ namespace GovTaskManagement.Application.Services
     {
         private IUnitOfWork UnitOfWork;
         private ITaskRepository TaskRepository;
-
+        
         public TaskService(IUnitOfWork _unitOfWork, ITaskRepository _taskRepository)
         {
             UnitOfWork = _unitOfWork;
             TaskRepository = _taskRepository;
+            
         }
-        public async Task<TaskEntity> CreateTask(TaskEntity entity)
+        public async Task<TaskDto> CreateTask(TaskDto dto)
         {
-            return await UnitOfWork.TasksRepository.CreateAsync(entity);
+            var entity = dto.ToEntity();
+            var createdEntity = await UnitOfWork.TasksRepository.CreateAsync(entity);
+            await UnitOfWork.SaveChangesAsync();
+            return createdEntity.ToDto();
         }
 
 
@@ -33,29 +40,37 @@ namespace GovTaskManagement.Application.Services
             return false;
         }
 
-        public Task<IEnumerable<TaskEntity>> GetAllTasks()
+        public async Task<IEnumerable<TaskDto>> GetAllTasks()
         {
-            return UnitOfWork.TasksRepository.GetAllAsync();
+            var entities = await UnitOfWork.TasksRepository.GetAllAsync();
+            return entities.ToDto();
         }
 
-        public async Task<TaskEntity> GetTaskByDocumentId(int TaskId)
+        public async Task<TaskDto> GetTaskByDocumentId(int TaskId)
         {
-            return await UnitOfWork.TasksRepository.GetTaskByDocumentId(TaskId);
+
+            var task = await UnitOfWork.TasksRepository.GetTaskByDocumentId(TaskId);
+            return task.ToDto();
         }
 
-        public async Task<TaskEntity> GetTaskById(int taskId)
+        public async Task<TaskDto> GetTaskById(int taskId)
         {
-            return await UnitOfWork.TasksRepository.GetTaskByTaskId(taskId);
+            var task = await UnitOfWork.TasksRepository.GetTaskByTaskId(taskId);
+            return task.ToDto();
         }
 
-        public async Task<TaskEntity> UpdateTask(TaskEntity entity)
+        public async Task<TaskDto> UpdateTask(TaskDto dto)
         {
-            return await UnitOfWork.TasksRepository.UpdateAsync(entity);
+            var entity = dto.ToEntity();
+            var updatedEntity = await UnitOfWork.TasksRepository.UpdateAsync(entity);
+            await UnitOfWork.SaveChangesAsync();
+            return updatedEntity.ToDto();
         }
 
-        public Task<IEnumerable<TaskEntity>> GetTasksByDepartmentId(int departmentId)
+        public async Task<IEnumerable<TaskDto>> GetTasksByDepartmentId(int departmentId)
         {
-            return UnitOfWork.TasksRepository.GetTasksByDepartmentId(departmentId);
+            var tasks = await UnitOfWork.TasksRepository.GetTasksByDepartmentId(departmentId);
+            return tasks.ToDto();
         }
     }
 }

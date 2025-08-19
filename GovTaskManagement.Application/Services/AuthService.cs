@@ -14,12 +14,11 @@ namespace GovTaskManagement.Application.Services
     public class AuthService : IAuthService
     {
         private readonly IUnitOfWork UnitOfWork;
-        private readonly IUserRepository UserRepository;
 
         public AuthService(IUnitOfWork _unitOfWork , IUserRepository _userRepository)
         {
             UnitOfWork = _unitOfWork;
-            UserRepository = _userRepository;
+            
         }
         public async Task<bool> LoginAsync(LoginRequestDto loginDto)
         {

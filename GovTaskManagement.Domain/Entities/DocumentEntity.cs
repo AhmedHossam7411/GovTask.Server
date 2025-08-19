@@ -19,8 +19,7 @@ namespace GovTaskManagement.Domain.Entities
         // Navigation
         public TaskEntity? Task { get; set; }
 
-        public DepartmentEntity DepartmentEntity { get; set; }
-        public int DepartmentId { get; set; }
+        
 
 
 

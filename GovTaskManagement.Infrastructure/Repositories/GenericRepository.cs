@@ -14,17 +14,17 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
     {
         private readonly toolDbContext context;
-
-
-        public GenericRepository(toolDbContext _context)
+        
+        public GenericRepository(toolDbContext _context )
         {
             context = _context;
+            
         }
 
         public virtual async Task<T> CreateAsync(T entity)
         {
             await context.Set<T>().AddAsync(entity);
-
+            
             return entity;
         }
 
@@ -34,28 +34,36 @@ namespace GovTaskManagement.Infrastructure.Repositories
             if (entity != null)
             {
                 context.Set<T>().Remove(entity);
+                
                 return true;
             }
             return false;
         }
         public virtual async Task<bool> ExistsAsync(int id)
         {
-            return await context.Set<T>().FindAsync(id) != null;
+            var exists = await context.Set<T>().FindAsync(id) != null;
+            
+            return exists;
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await context.Set<T>().ToListAsync();
+            var getAll = await context.Set<T>().ToListAsync();
+            
+            return getAll;
         }
 
         public virtual async Task<T?> GetAsync(int id)
         {
-            return await context.Set<T>().FindAsync(id);
+            var get = await context.Set<T>().FindAsync(id);
+            
+            return get;
         }
 
         public virtual async Task<T> UpdateAsync(T entity)
         {
             var updated = context.Set<T>().Update(entity);
+            
             return updated.Entity;
         }
     }

@@ -14,13 +14,13 @@ namespace GovTaskManagement.Infrastructure.Repositories
     public class DepartmentRepository : GenericRepository<DepartmentEntity>, IDepartmentRepository
 
     {
-            private readonly toolDbContext context;
-            
+        private readonly toolDbContext context;
+
 
         public DepartmentRepository(toolDbContext _context) : base(_context)
         {
             context = _context;
-            
+
         }
 
         //public async Task<DepartmentEntity> GetDepartmentByDocumentId(int documentId)

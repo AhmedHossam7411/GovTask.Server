@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GovTaskManagement.Domain.Entities;
-using GovTaskManagement.Infrastructure.Data;
 using GovTaskManagement.Application.Services;
+using GovTaskManagement.Application.System_Collections.Dtos;
+using Microsoft.Extensions.Caching.Memory;
+
 
 namespace GovernmentTaskManagement.Api.Endpoints
 {
@@ -15,96 +12,108 @@ namespace GovernmentTaskManagement.Api.Endpoints
     [ApiController]
     public class TaskEntitiesController : ControllerBase
     {
-        private readonly toolDbContext Context;
-        private readonly TaskService TaskService;
-        public TaskEntitiesController(toolDbContext _context, TaskService _taskService)
+        
+        private readonly ITaskService TaskService;
+        
+        public TaskEntitiesController(ITaskService _taskService)
         {
-            Context = _context;
+            
             TaskService = _taskService;
         }
 
         // GET: api/TaskEntities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskEntity>>> GetTasks()
+        public async Task<ActionResult<IEnumerable<TaskDto>>> GetTasks()
         {
-            return await TaskService.GetAllTasks();
+            var tasks = await TaskService.GetAllTasks();
+            return Ok(tasks);
         }
 
         // GET: api/TaskEntities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaskEntity>> GetTaskEntity(int id)
+        public async Task<ActionResult<TaskDto>> GetTaskEntity(int id)
         {
-            var taskEntity = await Context.Tasks.FindAsync(id);
+            var taskDto = await TaskService.GetTaskById(id);
 
-            if (taskEntity == null)
+            if (taskDto == null)
             {
                 return NotFound();
             }
 
-            return taskEntity;
+            return Ok(taskDto);
+        }
+        [HttpGet("by-document/{documentId}")]
+        public async Task<ActionResult<TaskDto>> GetTaskByDocumentId(int documentId)
+        {
+            var taskDto = await TaskService.GetTaskByDocumentId(documentId);
+
+            if (taskDto == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(taskDto);
+        }
+        [HttpGet("by-department/{departmentId}")]
+        public async Task<ActionResult<TaskDto>> GetTasksByDepartmentId(int departmentId)
+        {
+            var taskDto = await TaskService.GetTasksByDepartmentId(departmentId);
+
+            if (taskDto == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(taskDto);
         }
 
         // PUT: api/TaskEntities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaskEntity(int id, TaskEntity taskEntity)
+        public async Task<IActionResult> PutTaskEntity(int id, TaskDto dto)
         {
-            if (id != taskEntity.Id)
+            if (id != dto.Id)
             {
                 return BadRequest();
             }
 
-            Context.Entry(taskEntity).State = EntityState.Modified;
-
             try
             {
-                await Context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TaskEntityExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                var updated = await TaskService.UpdateTask(dto);
+                return NoContent();
             }
 
-            return NoContent();
+            catch (DbUpdateConcurrencyException)
+            {
+                return Conflict("Task was updated or deleted by another user");
+            }
+
         }
+
 
         // POST: api/TaskEntities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TaskEntity>> PostTaskEntity(TaskEntity taskEntity)
+        public async Task<ActionResult<TaskDto>> PostTaskEntity(TaskDto dto)
         {
-            Context.Tasks.Add(taskEntity);
-            await Context.SaveChangesAsync();
-
-            return CreatedAtAction("GetTaskEntity", new { id = taskEntity.Id }, taskEntity);
+            
+            var updated = await TaskService.CreateTask(dto);
+            return Ok(updated);
         }
 
         // DELETE: api/TaskEntities/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTaskEntity(int id)
         {
-            var taskEntity = await Context.Tasks.FindAsync(id);
-            if (taskEntity == null)
+            var taskdto = await TaskService.DeleteTask(id);
+            if (taskdto == true)
             {
-                return NotFound();
+                return Ok();
             }
-
-            Context.Tasks.Remove(taskEntity);
-            await Context.SaveChangesAsync();
-
-            return NoContent();
+          
+            return NotFound();
         }
 
-        private bool TaskEntityExists(int id)
-        {
-            return Context.Tasks.Any(e => e.Id == id);
-        }
+       
     }
 }
