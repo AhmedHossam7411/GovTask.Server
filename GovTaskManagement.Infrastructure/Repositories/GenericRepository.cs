@@ -13,9 +13,9 @@ namespace GovTaskManagement.Infrastructure.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     {
-        private readonly toolDbContext context;
+        private readonly ToolDbContext context;
         
-        public GenericRepository(toolDbContext _context )
+        public GenericRepository(ToolDbContext _context )
         {
             context = _context;
             
