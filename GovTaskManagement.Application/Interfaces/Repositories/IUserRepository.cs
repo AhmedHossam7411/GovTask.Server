@@ -1,7 +1,7 @@
 ﻿using GovTaskManagement.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace GovTaskManagement.Infrastructure.Repositories
+namespace GovTaskManagement.Application.Interfaces.Repositories
 {
     public interface IUserRepository
     {
@@ -11,6 +11,6 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         Task<ApiUser> SearchByEmailAsync(string email);
 
-        Task<String> UpdateUserAsync(ApiUser entity);  
+        Task<string> UpdateUserAsync(ApiUser entity);  
     }
 }

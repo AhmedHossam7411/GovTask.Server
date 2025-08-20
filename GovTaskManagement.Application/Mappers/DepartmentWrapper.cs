@@ -1,4 +1,4 @@
-﻿using GovTaskManagement.Application.System_Collections.Dtos;
+﻿using GovTaskManagement.Application.Dtos;
 using GovTaskManagement.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GovTaskManagement.Application.System_Collections.Mappers
+namespace GovTaskManagement.Application.Mappers
 {
     public static class DepartmentWrapper
     {

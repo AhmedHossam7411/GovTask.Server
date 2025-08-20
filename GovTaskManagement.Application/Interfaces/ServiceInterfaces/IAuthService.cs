@@ -1,7 +1,7 @@
 ﻿using GovTaskManagement.Application.Dtos;
 using Microsoft.AspNetCore.Identity;
 
-namespace GovTaskManagement.Application.Services
+namespace GovTaskManagement.Application.Interfaces.ServiceInterfaces
 {
     public interface IAuthService
     {

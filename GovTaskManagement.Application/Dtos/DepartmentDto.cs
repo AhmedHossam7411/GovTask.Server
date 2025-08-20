@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GovTaskManagement.Application.System_Collections.Dtos
+namespace GovTaskManagement.Application.Dtos
 {
     public class DepartmentDto
     {
