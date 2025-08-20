@@ -6,7 +6,7 @@ using GovTaskManagement.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace GovTaskManagement.Api.AppHost
+namespace GovernmentTaskManagement.Api
 {
     public class Program
     {
