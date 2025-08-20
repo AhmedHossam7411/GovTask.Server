@@ -10,12 +10,12 @@ namespace GovernmentTaskManagement.Api.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TaskEntitiesController : ControllerBase
+    public class TaskController : ControllerBase
     {
         
         private readonly ITaskService TaskService;
         
-        public TaskEntitiesController(ITaskService _taskService)
+        public TaskController(ITaskService _taskService)
         {
             
             TaskService = _taskService;
@@ -31,7 +31,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
 
         // GET: api/TaskEntities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaskDto>> GetTaskEntity(int id)
+        public async Task<ActionResult<TaskDto>> GetTask(int id)
         {
             var taskDto = await TaskService.GetTaskById(id);
 
@@ -70,7 +70,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
         // PUT: api/TaskEntities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaskEntity(int id, TaskDto dto)
+        public async Task<IActionResult> PutTask(int id, TaskDto dto)
         {
             if (id != dto.Id)
             {
@@ -94,16 +94,16 @@ namespace GovernmentTaskManagement.Api.Endpoints
         // POST: api/TaskEntities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TaskDto>> PostTaskEntity(TaskDto dto)
+        public async Task<ActionResult<TaskDto>> PostTask(TaskDto dto)
         {
             
-            var updated = await TaskService.CreateTask(dto);
-            return Ok(updated);
+            var created = await TaskService.CreateTask(dto);
+            return Ok(created);
         }
 
         // DELETE: api/TaskEntities/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTaskEntity(int id)
+        public async Task<IActionResult> DeleteTasks(int id)
         {
             var taskdto = await TaskService.DeleteTask(id);
             if (taskdto == true)

@@ -4,6 +4,7 @@ using GovTaskManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GovTaskManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(toolDbContext))]
-    partial class toolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250820104639_departmentColumnNaming")]
+    partial class departmentColumnNaming
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,13 +119,14 @@ namespace GovTaskManagement.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApiUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TaskEntityId")
+                    b.Property<int>("TaskEntityId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -354,11 +358,15 @@ namespace GovTaskManagement.Infrastructure.Migrations
                 {
                     b.HasOne("GovTaskManagement.Domain.Entities.ApiUser", "ApiUser")
                         .WithMany()
-                        .HasForeignKey("ApiUserId");
+                        .HasForeignKey("ApiUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GovTaskManagement.Domain.Entities.TaskEntity", "TaskEntity")
                         .WithMany()
-                        .HasForeignKey("TaskEntityId");
+                        .HasForeignKey("TaskEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ApiUser");
 

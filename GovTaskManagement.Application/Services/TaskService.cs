@@ -36,7 +36,10 @@ namespace GovTaskManagement.Application.Services
 
             var result = await UnitOfWork.TasksRepository.DeleteAsync(taskId);
             if (result)
+            {
+                await UnitOfWork.SaveChangesAsync();
                 return true;
+            }
             return false;
         }
 
@@ -55,7 +58,7 @@ namespace GovTaskManagement.Application.Services
 
         public async Task<TaskDto> GetTaskById(int taskId)
         {
-            var task = await UnitOfWork.TasksRepository.GetTaskByTaskId(taskId);
+            var task = await UnitOfWork.TasksRepository.GetAsync(taskId);
             return task.ToDto();
         }
 

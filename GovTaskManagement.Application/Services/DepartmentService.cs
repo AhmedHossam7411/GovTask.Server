@@ -1,5 +1,8 @@
 ﻿using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Application.System_Collections.Dtos;
+using GovTaskManagement.Application.System_Collections.Mappers;
 using GovTaskManagement.Domain.Entities;
+using GovTaskManagement.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,22 +13,59 @@ namespace GovTaskManagement.Application.Services
 {
     public class DepartmentService : IDepartmentService
     {
-        private readonly IDepartmentRepository _repository;
-        private readonly IUnitOfWork _unitOfWork;
-        public DepartmentService(IDepartmentRepository DepartmentRepository , IUnitOfWork UnitOfWork) 
+        private readonly IDepartmentRepository Repository;
+        private readonly IUnitOfWork UnitOfWork;
+        public DepartmentService(IDepartmentRepository _departmentRepository , IUnitOfWork _unitOfWork) 
         { 
-          _repository = DepartmentRepository;
-            _unitOfWork = UnitOfWork;
+          Repository = _departmentRepository;
+            UnitOfWork = _unitOfWork;
+        }
+        public async Task<IEnumerable<DepartmentEntity>> GetAllDepartments()
+        {
+            var entities = await UnitOfWork.DepartmentRepository.GetAllAsync();
+            return entities;
+        }
+        public async Task<DepartmentEntity> UpdateDepartment(DepartmentEntity entity)
+        {
+            
+            var updatedEntity = await UnitOfWork.DepartmentRepository.UpdateAsync(entity);
+            await UnitOfWork.SaveChangesAsync();
+            return updatedEntity;
+        }
+        public async Task<bool> DeleteDepartment(int departmentId)
+        {
+
+            var result = await UnitOfWork.DepartmentRepository.DeleteAsync(departmentId);
+            if (result)
+            {
+                await UnitOfWork.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+        public async Task<DepartmentEntity> CreateDepartment(DepartmentEntity entity)
+        {
+            
+            var createdEntity = await UnitOfWork.DepartmentRepository.CreateAsync(entity);
+            await UnitOfWork.SaveChangesAsync();
+            return createdEntity;
+        }
+        public async Task<DepartmentEntity> GetDepartmentById(int departmentId)
+        {
+            var dept = await UnitOfWork.DepartmentRepository.GetAsync(departmentId);
+            return dept;
         }
 
-        public Task<DepartmentEntity?> GetDepartmentByTaskId(int taskId)
+        public async Task<DepartmentEntity?> GetDepartmentByTaskId(int taskId)
         {
-            throw new NotImplementedException();
+            var dept = await UnitOfWork.DepartmentRepository.GetDepartmentByTaskId(taskId);
+            return dept;
         }
 
-        public Task<DepartmentEntity?> GetDepartmentByUserId(int userId)
+        public async Task<DepartmentEntity?> GetDepartmentByUserId(int userId)
         {
-            throw new NotImplementedException();
+            var dept = await UnitOfWork.DepartmentRepository.GetDepartmentByUserId(userId);
+            return dept;
         }
     }
 }

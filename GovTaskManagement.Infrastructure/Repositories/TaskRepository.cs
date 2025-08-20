@@ -43,10 +43,6 @@ namespace GovTaskManagement.Infrastructure.Repositories
             return tasks;
         }
 
-        public async Task<TaskEntity?> GetTaskByTaskId(int TaskId)
-        {
-            var task = await context.Tasks.FindAsync(TaskId);
-            return task;
-        }
+       
     }
 }

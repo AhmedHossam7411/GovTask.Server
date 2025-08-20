@@ -13,13 +13,13 @@ namespace GovTaskManagement.Domain.Entities
         
         public string Name { get; set; }
 
-        public ApiUser ApiUser { get; set; }  // Navigation property to User associated with the department
-        public List<ApiUser> Users { get; set; }  // Navigation property to Users associated with the department
+        public ApiUser? ApiUser { get; set; }  // Navigation property to User associated with the department
+        public List<ApiUser>? Users { get; set; }  // Navigation property to Users associated with the department
 
         
 
-        public TaskEntity TaskEntity { get; set; }
-        public List<TaskEntity> Tasks { get; set; }
+        public TaskEntity? TaskEntity { get; set; }
+        public List<TaskEntity>? Tasks { get; set; }
 
     }
 }

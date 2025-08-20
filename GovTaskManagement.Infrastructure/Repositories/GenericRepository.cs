@@ -53,7 +53,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
             return getAll;
         }
 
-        public virtual async Task<T?> GetAsync(int id)
+        public virtual async Task<T> GetAsync(int id)
         {
             var get = await context.Set<T>().FindAsync(id);
             
