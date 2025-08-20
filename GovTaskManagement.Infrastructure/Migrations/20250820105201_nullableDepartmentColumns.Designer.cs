@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GovTaskManagement.Infrastructure.Migrations
 {
-    [DbContext(typeof(toolDbContext))]
+    [DbContext(typeof(ToolDbContext))]
     [Migration("20250820105201_nullableDepartmentColumns")]
     partial class nullableDepartmentColumns
     {

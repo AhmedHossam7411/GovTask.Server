@@ -9,10 +9,10 @@ namespace GovTaskManagement.Infrastructure.Repositories
 {
     public class DocumentRepository :  GenericRepository<DocumentEntity> , IDocumentRepository
     {
-        private readonly toolDbContext context;
+        private readonly ToolDbContext context;
 
 
-        public DocumentRepository(toolDbContext _context) : base(_context) 
+        public DocumentRepository(ToolDbContext _context) : base(_context) 
         {
             context = _context;
             
