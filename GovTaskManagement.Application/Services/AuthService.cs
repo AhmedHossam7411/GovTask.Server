@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Application.Interfaces.Repositories;
-using GovTaskManagement.Infrastructure.Repositories;
+using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 
 namespace GovTaskManagement.Application.Services
 {

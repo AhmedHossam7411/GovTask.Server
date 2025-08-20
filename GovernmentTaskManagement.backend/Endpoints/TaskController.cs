@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GovTaskManagement.Domain.Entities;
-using GovTaskManagement.Application.Services;
-using GovTaskManagement.Application.System_Collections.Dtos;
 using Microsoft.Extensions.Caching.Memory;
+using GovTaskManagement.Application.Dtos;
+using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 
 
 namespace GovernmentTaskManagement.Api.Endpoints

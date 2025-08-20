@@ -1,5 +1,5 @@
-
 using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 using GovTaskManagement.Application.Services;
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;
@@ -7,7 +7,7 @@ using GovTaskManagement.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace GovTaskManagement.Api.AppHost
+namespace GovernmentTaskManagement.Api
 {
     public class Program
     {

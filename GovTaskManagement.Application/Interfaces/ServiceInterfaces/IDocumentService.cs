@@ -1,4 +1,4 @@
-﻿namespace GovTaskManagement.Application.Services
+﻿namespace GovTaskManagement.Application.Interfaces.ServiceInterfaces
 {
     public interface IDocumentService
     {

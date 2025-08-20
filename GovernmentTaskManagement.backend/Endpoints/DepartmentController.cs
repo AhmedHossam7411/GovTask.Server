@@ -1,5 +1,6 @@
-﻿using GovTaskManagement.Application.Services;
-using GovTaskManagement.Application.System_Collections.Dtos;
+﻿using GovTaskManagement.Application.Dtos;
+using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
+using GovTaskManagement.Application.Mappers;
 using GovTaskManagement.Application.System_Collections.Mappers;
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;

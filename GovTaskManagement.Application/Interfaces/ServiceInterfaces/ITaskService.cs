@@ -1,7 +1,7 @@
-﻿using GovTaskManagement.Application.System_Collections.Dtos;
+﻿using GovTaskManagement.Application.Dtos;
 using GovTaskManagement.Domain.Entities;
 
-namespace GovTaskManagement.Application.Services
+namespace GovTaskManagement.Application.Interfaces.ServiceInterfaces
 {
     public interface ITaskService
     {
