@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GovTaskManagement.Infrastructure.Migrations
 {
-    [DbContext(typeof(toolDbContext))]
+    [DbContext(typeof(ToolDbContext))]
     partial class toolDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

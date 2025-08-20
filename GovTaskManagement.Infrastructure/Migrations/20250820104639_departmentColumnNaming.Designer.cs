@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GovTaskManagement.Infrastructure.Migrations
 {
-    [DbContext(typeof(toolDbContext))]
+    [DbContext(typeof(ToolDbContext))]
     [Migration("20250820104639_departmentColumnNaming")]
     partial class departmentColumnNaming
     {
