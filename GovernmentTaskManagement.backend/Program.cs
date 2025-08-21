@@ -1,17 +1,14 @@
-using GovTaskManagement.Application.Interfaces.Repositories;
-using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
-using GovTaskManagement.Application.Services;
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure;
 using GovTaskManagement.Infrastructure.Data;
-using GovTaskManagement.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+
 
 
       var builder = WebApplication.CreateBuilder(args);
 
       builder.Services.AddInfrastructure(builder.Configuration);
+
       builder.Services.AddIdentity<ApiUser, IdentityRole>()
       .AddEntityFrameworkStores<ToolDbContext>()
       .AddDefaultTokenProviders();

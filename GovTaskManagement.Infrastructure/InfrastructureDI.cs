@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-
 namespace GovTaskManagement.Infrastructure
 {
     public static class InfrastructureDI
@@ -27,7 +26,8 @@ namespace GovTaskManagement.Infrastructure
             Services.AddScoped<IAuthService, AuthService>();
             Services.AddScoped<ITaskService, TaskService>();
             Services.AddScoped<IDepartmentService, DepartmentService>();
-        
+            Services.AddScoped<IDocumentService, DocumentService>();
+
 
             Services.AddDbContext<ToolDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

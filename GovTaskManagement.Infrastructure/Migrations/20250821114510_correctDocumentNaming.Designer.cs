@@ -4,6 +4,7 @@ using GovTaskManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GovTaskManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ToolDbContext))]
-    partial class toolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250821114510_correctDocumentNaming")]
+    partial class correctDocumentNaming
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,7 +153,7 @@ namespace GovTaskManagement.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TaskId")
+                    b.Property<int>("TaskId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UploadDate")
@@ -370,7 +373,8 @@ namespace GovTaskManagement.Infrastructure.Migrations
                     b.HasOne("GovTaskManagement.Domain.Entities.TaskEntity", "Task")
                         .WithMany("Documents")
                         .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Task");
                 });
