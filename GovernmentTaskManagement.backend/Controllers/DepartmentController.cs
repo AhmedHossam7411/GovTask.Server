@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GovernmentTaskManagement.Api.Endpoints
+namespace GovernmentTaskManagement.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
