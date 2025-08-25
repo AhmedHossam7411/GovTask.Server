@@ -7,7 +7,7 @@ namespace GovTaskManagement.Application.Interfaces.ServiceInterfaces
     {
         
         Task<string?> LoginAsync(LoginRequestDto loginDto);
-        Task<IdentityResult> RegisterAsync(RegisterRequestDto registerDto,string role ,int? departmentId);
+        Task<string?> RegisterAsync(RegisterRequestDto registerDto);
         
         
     }

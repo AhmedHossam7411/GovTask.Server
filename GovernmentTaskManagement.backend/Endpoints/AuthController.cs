@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GovTaskManagement.Application.Dtos;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
+using NuGet.Common;
 
 namespace GovernmentTaskManagement.Api.Endpoints
 {
@@ -19,22 +20,22 @@ namespace GovernmentTaskManagement.Api.Endpoints
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
-            var result = await AuthService.RegisterAsync(registerRequestDto , registerRequestDto.role);
-            if(result.Succeeded)
+            var token = await AuthService.RegisterAsync(registerRequestDto);
+            if(token == null)
             {
-                return Ok("Registration successful");
+                return BadRequest("registration failed");
             }
-            return BadRequest("registration failed");
+                return Ok("Registration successful");
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequestDto loginRequest)
         {
-            var result = await AuthService.LoginAsync(loginRequest);
-            if(result != false)
+            var token = await AuthService.LoginAsync(loginRequest);
+            if(token == null)
             {
-                return Ok("login successful");
+              return Unauthorized("login failed");
             }
-            return BadRequest("login failed");
+            return Ok(new {Token = token});
         }
 
     }

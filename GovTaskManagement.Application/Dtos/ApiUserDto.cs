@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Dtos
 {
-    internal class ApiUserDto
+    public class ApiUserDto
     {
         public string Id { get; set; }
         public string Username { get; set; }

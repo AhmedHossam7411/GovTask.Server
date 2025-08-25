@@ -18,6 +18,7 @@ namespace GovTaskManagement.Application.Dtos
         [Required]
         public string password { get; set; }
         [Required]
-        public string role { get; set; }
+        public string Role { get; set; } = "DepartmentUser";
+        public int? DepartmentId { get; set; }
     }
 }

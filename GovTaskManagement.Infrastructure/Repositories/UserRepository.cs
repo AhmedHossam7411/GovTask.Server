@@ -80,8 +80,8 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         public async Task<string> UpdateUserAsync(ApiUser entity)
         {
-            await _userManager.UpdateAsync(entity);
-            return entity.ConcurrencyStamp;
+            var update = await _userManager.UpdateAsync(entity);
+            return update.Succeeded ? "success" : "failed";
         }
     }
 }

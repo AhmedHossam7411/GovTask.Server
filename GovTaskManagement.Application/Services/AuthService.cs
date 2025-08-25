@@ -1,37 +1,46 @@
 ﻿using GovTaskManagement.Application.Dtos;
+using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
+using GovTaskManagement.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GovTaskManagement.Domain.Entities;
-using GovTaskManagement.Application.Interfaces.Repositories;
-using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 
 namespace GovTaskManagement.Application.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly IUnitOfWork UnitOfWork;
-
-        public AuthService(IUnitOfWork _unitOfWork , IUserRepository _userRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
+        public AuthService(IConfiguration config , IUnitOfWork unitOfWork , IUserRepository _userRepository)
         {
-            UnitOfWork = _unitOfWork;
-            
+            _unitOfWork = unitOfWork;
+            _configuration = config;
         }
-        public async Task<string?> LoginAsync(LoginRequestDto loginDto)
+        public async Task<string?> LoginAsync(LoginRequestDto loginDto) 
         {
             try
             {
-                var userExists = await UnitOfWork.UserRepository.SearchByEmailAsync(loginDto.email);
+                var userExists = await _unitOfWork.UserRepository.SearchByEmailAsync(loginDto.email);
                 if (userExists is null)
                     return null;
 
-                var validPassword = await UnitOfWork.UserRepository.CheckPasswordAsync(userExists, loginDto.password);
+                var validPassword = await _unitOfWork.UserRepository.CheckPasswordAsync(userExists, loginDto.password);
                 if (validPassword is false)
                     return null;
-                var token = JwtTokenGenerator.gene
+
+                var token = JwtTokenGenerator.GenerateToken(userExists,
+                    _configuration["Jwt:Key"],
+                    _configuration["Jwt:Issuer"],
+                    _configuration["Jwt:Audience"]
+                    );
+                await _unitOfWork.SaveChangesAsync();
+                return token;
             }
             catch (Exception)
             {
@@ -39,48 +48,52 @@ namespace GovTaskManagement.Application.Services
                 throw;
             }
         }
-        public async Task<IdentityResult> RegisterAsync(RegisterRequestDto registerDto , string role = "DepartmentUser", int? departmentId)
+        public async Task<string?> RegisterAsync(RegisterRequestDto registerDto)
         {
             try
             {
-                if (role == "MinistryAdmin")
+                if (registerDto.Role == "MinistryAdmin")
                 {
-                    var existingMinistryAdmin = await UnitOfWork.UserRepository.FindByRoleAsync("MinistryAdmin");
-                    if (existingMinistryAdmin != null)
+                    var existingMinistryAdmin = await _unitOfWork.UserRepository.FindByRoleAsync("MinistryAdmin");
+                    if (existingMinistryAdmin == true)
                         throw new Exception("MinistryAdmin already exists.");
                 }
-                if (role == "DepartmentAdmin" && departmentId != null)
+                if (registerDto.Role == "DepartmentAdmin" && registerDto.DepartmentId != null)
                 {
-                    var existingDeptAdmin = await UnitOfWork.UserRepository.FindByRoleAndDepartmentAsync("DepartmentAdmin", departmentId.Value);
-                    if (existingDeptAdmin != null)
+                    var existingDeptAdmin = await _unitOfWork.UserRepository.FindByRoleAndDepartmentAsync("DepartmentAdmin",registerDto.DepartmentId.Value);
+                    if (existingDeptAdmin == true)
                         throw new Exception("A DepartmentAdmin already exists for this department.");
                 }
-                var existingUser = await UnitOfWork.UserRepository.SearchByEmailAsync(registerDto.email);
-                if (existingUser != null )
+                if (registerDto.Role == "DepartmentUser" && registerDto.DepartmentId != null)
                 {
-                    return IdentityResult.Failed(new IdentityError
-                    {
-                        Description = "User already exists."
-                    }); // User already exists
+                    var existingUser = await _unitOfWork.UserRepository.SearchByEmailAsync(registerDto.email);
+                    if (existingUser != null)
+                        throw new Exception("Department User already Exists");
                 }
                 var user = new ApiUser
                 {
                     UserName = registerDto.userName,
                     Email = registerDto.email,
-                    Role = role
+                    DepartmentId = registerDto.DepartmentId,
+                    Role = registerDto.Role
                 };
-                var result = await UnitOfWork.UserRepository.CreateUserAsync(user, registerDto.password);
+                var result = await _unitOfWork.UserRepository.CreateUserAsync(user, registerDto.password);
 
                 if (!result.Succeeded)
                 {
-                    
+
                     foreach (var error in result.Errors)
                     {
                         Console.WriteLine(error.Description);
                     }
                 }
-
-                return result;
+                var token = JwtTokenGenerator.GenerateToken(user,
+                    _configuration["Jwt:Key"],
+                    _configuration["Jwt:Issuer"],
+                    _configuration["Jwt:Audience"]
+                    );
+                await _unitOfWork.SaveChangesAsync();
+                return token;
 
             }
             catch (Exception)
@@ -89,7 +102,7 @@ namespace GovTaskManagement.Application.Services
                 throw;
             }
         }
-        
+         
 
     }
 }
