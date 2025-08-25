@@ -12,14 +12,15 @@ namespace GovTaskManagement.Application.Mappers
     {
         public static DocumentDto ToDto(this DocumentEntity document)
         {
-            return new DocumentDto()
-            {
-               Id = document.Id,
-               Name = document.Name,
-               Description = document.Description,
-               UploadDate = document.UploadDate,
-               
-            };
+            return new DocumentDto(
+
+               document.Id,
+               document.Name,
+               document.Description,
+               document.UploadDate,
+               document.TaskId
+
+            );
         }
         public static DocumentEntity ToEntity(this DocumentDto entity)
         {

@@ -23,7 +23,6 @@ namespace GovernmentTaskManagement.Api.Controllers
             _documentService = documentService;
         }
 
-        // GET: api/Document
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DocumentDto>>> GetDocuments()
         {
@@ -34,27 +33,23 @@ namespace GovernmentTaskManagement.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<DocumentDto>> GetDocumentById(int documentId)
         {
-            var Document = await _documentService.GetDocumentById(documentId);
+            var document = await _documentService.GetDocumentById(documentId);
 
-            if (Document == null)
+            if (document is null)
             {
                 return NotFound();
             }
 
-            return Ok(Document);
+            return Ok(document);
         }
 
         [HttpGet("by-Task/{id}")]
         public async Task<ActionResult<DocumentDto>> GetDocumentByTaskId(int documentId)
         {
-            var Documents = await _documentService.GetDocumentsByTaskId(documentId);
-            return Ok(Documents);
+            var documents = await _documentService.GetDocumentsByTaskId(documentId);
+            return Ok(documents);
         }
 
-
-
-        // PUT: api/Document/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDocument(int id, DocumentDto DocumentDto)
         {
@@ -67,8 +62,6 @@ namespace GovernmentTaskManagement.Api.Controllers
             return Ok();
         }
 
-        // POST: api/Document
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<DocumentDto>> PostDocument(DocumentDto DocumentDto)
         {
@@ -76,7 +69,6 @@ namespace GovernmentTaskManagement.Api.Controllers
             return Ok(document);
         }
 
-        // DELETE: api/Document/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDocumentDto(int documentId)
         {

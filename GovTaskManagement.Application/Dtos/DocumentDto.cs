@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Dtos
 {
-    public class DocumentDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public DateTime UploadDate { get; set; }
-        public int TaskId { get; set; }
-    }
+    public record DocumentDto(
+        int Id,
+        string Name,
+        string Description,
+        DateTime UploadDate,
+        int TaskId
+    );
 }
