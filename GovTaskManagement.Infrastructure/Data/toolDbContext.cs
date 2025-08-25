@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 namespace GovTaskManagement.Infrastructure.Data
 {
-    public class toolDbContext(DbContextOptions<toolDbContext> options) : IdentityDbContext<ApiUser>(options) // identity enables us to use ASPNET USER AND ROLES tables for auth and authorization
+    public class ToolDbContext(DbContextOptions<ToolDbContext> options) : IdentityDbContext<ApiUser>(options) // identity enables us to use ASPNET USER AND ROLES tables for auth and authorization
     {
         //public DbSet<ApiUser> Users { get; set; }
         public DbSet<DocumentEntity> Documents { get; set; }
@@ -21,7 +21,7 @@ namespace GovTaskManagement.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(toolDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ToolDbContext).Assembly);
 
             modelBuilder.Entity<ApiUser>()
              .HasMany(u => u.Tasks)

@@ -20,16 +20,18 @@ namespace GovTaskManagement.Application.Services
             UnitOfWork = _unitOfWork;
             
         }
-        public async Task<bool> LoginAsync(LoginRequestDto loginDto)
+        public async Task<string?> LoginAsync(LoginRequestDto loginDto)
         {
             try
             {
                 var userExists = await UnitOfWork.UserRepository.SearchByEmailAsync(loginDto.email);
-                if (userExists == null)
-                    return false; 
+                if (userExists is null)
+                    return null;
 
-                var logged = await UnitOfWork.UserRepository.CheckPasswordAsync(userExists, loginDto.password);
-                return logged; 
+                var validPassword = await UnitOfWork.UserRepository.CheckPasswordAsync(userExists, loginDto.password);
+                if (validPassword is false)
+                    return null;
+                var token = JwtTokenGenerator.gene
             }
             catch (Exception)
             {
@@ -37,10 +39,22 @@ namespace GovTaskManagement.Application.Services
                 throw;
             }
         }
-        public async Task<IdentityResult> RegisterAsync(RegisterRequestDto registerDto)
+        public async Task<IdentityResult> RegisterAsync(RegisterRequestDto registerDto , string role = "DepartmentUser", int? departmentId)
         {
             try
             {
+                if (role == "MinistryAdmin")
+                {
+                    var existingMinistryAdmin = await UnitOfWork.UserRepository.FindByRoleAsync("MinistryAdmin");
+                    if (existingMinistryAdmin != null)
+                        throw new Exception("MinistryAdmin already exists.");
+                }
+                if (role == "DepartmentAdmin" && departmentId != null)
+                {
+                    var existingDeptAdmin = await UnitOfWork.UserRepository.FindByRoleAndDepartmentAsync("DepartmentAdmin", departmentId.Value);
+                    if (existingDeptAdmin != null)
+                        throw new Exception("A DepartmentAdmin already exists for this department.");
+                }
                 var existingUser = await UnitOfWork.UserRepository.SearchByEmailAsync(registerDto.email);
                 if (existingUser != null )
                 {
@@ -53,7 +67,7 @@ namespace GovTaskManagement.Application.Services
                 {
                     UserName = registerDto.userName,
                     Email = registerDto.email,
-                    
+                    Role = role
                 };
                 var result = await UnitOfWork.UserRepository.CreateUserAsync(user, registerDto.password);
 

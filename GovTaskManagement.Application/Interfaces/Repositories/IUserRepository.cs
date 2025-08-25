@@ -11,6 +11,8 @@ namespace GovTaskManagement.Application.Interfaces.Repositories
 
         Task<ApiUser> SearchByEmailAsync(string email);
 
-        Task<string> UpdateUserAsync(ApiUser entity);  
+        Task<string> UpdateUserAsync(ApiUser entity);
+        Task<bool> FindByRoleAndDepartmentAsync(string role, int departmentId);
+        Task<bool> FindByRoleAsync(string role);
     }
 }

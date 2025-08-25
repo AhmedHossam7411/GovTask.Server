@@ -19,7 +19,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
-            var result = await AuthService.RegisterAsync(registerRequestDto);
+            var result = await AuthService.RegisterAsync(registerRequestDto , registerRequestDto.role);
             if(result.Succeeded)
             {
                 return Ok("Registration successful");
