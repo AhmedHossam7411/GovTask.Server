@@ -14,10 +14,10 @@ namespace GovTaskManagement.Infrastructure.Repositories
     public class DepartmentRepository : GenericRepository<DepartmentEntity>, IDepartmentRepository
 
     {
-        private readonly toolDbContext context;
+        private readonly ToolDbContext context;
 
 
-        public DepartmentRepository(toolDbContext _context) : base(_context)
+        public DepartmentRepository(ToolDbContext _context) : base(_context)
         {
             context = _context;
 

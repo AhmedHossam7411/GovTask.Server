@@ -9,7 +9,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly toolDbContext _context;
+        private readonly ToolDbContext _context;
         
         public ITaskRepository TasksRepository { get; }
 
@@ -21,7 +21,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
        
         public UnitOfWork(
-           toolDbContext context,
+           ToolDbContext context,
            ITaskRepository taskRepository,
            IDocumentRepository documentRepository,
            IDepartmentRepository departmentRepository,

@@ -1,40 +1,17 @@
-using GovTaskManagement.Application.Interfaces.Repositories;
-using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
-using GovTaskManagement.Application.Services;
 using GovTaskManagement.Domain.Entities;
+using GovTaskManagement.Infrastructure;
 using GovTaskManagement.Infrastructure.Data;
-using GovTaskManagement.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
-namespace GovernmentTaskManagement.Api
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));  
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-            builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
-            builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+      var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddScoped<IAuthService, AuthService>();
-            builder.Services.AddScoped<ITaskService, TaskService>();
-            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
-            
+      builder.Services.AddInfrastructure(builder.Configuration);
 
-            builder.Services.AddIdentity<ApiUser, IdentityRole>()
-            .AddEntityFrameworkStores<toolDbContext>()
-            .AddDefaultTokenProviders();
-
-            builder.Services.AddDbContext<toolDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+      builder.Services.AddIdentity<ApiUser, IdentityRole>()
+      .AddEntityFrameworkStores<ToolDbContext>()
+      .AddDefaultTokenProviders();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -59,6 +36,6 @@ namespace GovernmentTaskManagement.Api
             app.MapControllers();
 
             app.Run();
-        }
-    }
-}
+        
+    
+
