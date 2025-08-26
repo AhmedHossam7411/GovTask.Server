@@ -65,7 +65,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         public override async Task<IEnumerable<ApiUser>> GetAllAsync()
         {
-            return _userManager.Users;
+            return await _userManager.Users.ToListAsync();
         }
 
         public override async Task<ApiUser> GetAsync(int id)
