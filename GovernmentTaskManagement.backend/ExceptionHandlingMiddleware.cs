@@ -1,39 +1,43 @@
-﻿using System.Net;
-using System.Text.Json;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Serialization;
+using System.Net;
 
-public class ExceptionHandlingMiddleware
+public class ExceptionHandlingMiddleware : IExceptionHandler
 {
-    private readonly RequestDelegate _next;
+    private readonly ILogger _logger;
 
-    public ExceptionHandlingMiddleware(RequestDelegate next)
+    public ExceptionHandlingMiddleware(ILogger logger)
     {
-        _next = next;
+        _logger = logger;
     }
-
-    public async Task Invoke(HttpContext context)
+    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        try
-        {
-            await _next(context);
-        }
-        catch (Exception ex)
-        {
-            await HandleExceptionAsync(context, ex);
-        }
-    }
+        _logger.LogError($"Error occured while processing request ${exception.Message}");
 
-    private static Task HandleExceptionAsync(HttpContext context, Exception ex)
-    {
-        var response = new
+        var problemDetails = new ProblemDetails
         {
-            message = ex.Message,
-            detail = ex.InnerException?.Message
+            Title = exception.Message,
         };
+        switch (exception)
+        {
+            case BadHttpRequestException:
+                problemDetails.Title = exception.GetType().Name;
+                problemDetails.Status = (int)HttpStatusCode.BadRequest;
+                break;
 
-        var payload = JsonSerializer.Serialize(response);
-        context.Response.ContentType = "application/json";
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            case UnauthorizedAccessException:
+                problemDetails.Title = exception.GetType().Name;
+                problemDetails.Status = (int)HttpStatusCode.Unauthorized;
+                break;
 
-        return context.Response.WriteAsync(payload);
+            default:
+                problemDetails.Title = "Internal Server Error";
+                problemDetails.Status = (int)HttpStatusCode.InternalServerError;
+                break;
+        }
+        httpContext.Response.StatusCode = (int)problemDetails.Status;
+        await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+        return true;
     }
 }
