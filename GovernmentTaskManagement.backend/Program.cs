@@ -28,6 +28,7 @@ using Microsoft.AspNetCore.Identity;
             }
 
             app.UseHttpsRedirection();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseAuthentication(); 
             app.UseAuthorization();
