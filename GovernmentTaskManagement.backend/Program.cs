@@ -1,7 +1,6 @@
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure;
 using GovTaskManagement.Infrastructure.Data;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 
 
@@ -31,8 +30,8 @@ using Microsoft.AspNetCore.Identity;
             app.UseHttpsRedirection();
 
             app.UseAuthentication(); 
-            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseAuthorization();
+
 
             app.MapControllers();
 
