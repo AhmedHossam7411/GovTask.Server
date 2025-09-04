@@ -25,7 +25,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
             {
                 return BadRequest("registration failed");
             }
-                return Ok("Registration successful");
+            return Ok(new { Token = token });
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequestDto loginRequest)
