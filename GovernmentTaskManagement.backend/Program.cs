@@ -3,12 +3,9 @@ using GovTaskManagement.Infrastructure;
 using GovTaskManagement.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration);
-
 builder.Services.AddIdentity<ApiUser, IdentityRole>()
 .AddEntityFrameworkStores<ToolDbContext>()
 .AddDefaultTokenProviders();

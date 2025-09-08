@@ -37,36 +37,6 @@ namespace GovTaskManagement.Application.Services
         }
         public async Task<string?> RegisterAsync(RegisterRequestDto registerDto)
         {
-
-            //var totalUsers = await _unitOfWork.UserRepository.GetAllAsync();
-
-
-            //if (totalUsers.Count() == 0)
-            //{
-            //    if (registerDto.Role != "MinistryAdmin")
-            //        throw new Exception("The first user must be a MinistryAdmin.");
-            //    return null;
-            //}
-            //else
-            //{
-            //    if (registerDto.Role == "MinistryAdmin")
-            //    {
-            //        var existingMinistryAdmin = await _unitOfWork.UserRepository.FindByRoleAsync("MinistryAdmin");
-            //        if (existingMinistryAdmin == true)
-            //            throw new Exception("MinistryAdmin already exists.");
-            //    }
-            //    if (registerDto.Role == "DepartmentAdmin" && registerDto.DepartmentId != null)
-            //    {
-            //        var existingDeptAdmin = await _unitOfWork.UserRepository.FindByRoleAndDepartmentAsync("DepartmentAdmin", registerDto.DepartmentId.Value);
-            //        if (existingDeptAdmin == true)
-            //            throw new Exception("A DepartmentAdmin already exists for this department.");
-            //    }
-            //    if (registerDto.Role == "DepartmentUser" && registerDto.DepartmentId != null)
-            //    {
-            //        var existingUser = await _unitOfWork.UserRepository.SearchByEmailAsync(registerDto.email);
-            //        if (existingUser != null)
-            //            throw new Exception("Department User with this email already Exists");
-            //    }
             var user = new ApiUser
             {
                 UserName = registerDto.userName,
