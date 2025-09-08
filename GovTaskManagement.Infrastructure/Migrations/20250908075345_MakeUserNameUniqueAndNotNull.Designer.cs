@@ -4,6 +4,7 @@ using GovTaskManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GovTaskManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ToolDbContext))]
-    partial class toolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250908075345_MakeUserNameUniqueAndNotNull")]
+    partial class MakeUserNameUniqueAndNotNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,9 +87,7 @@ namespace GovTaskManagement.Infrastructure.Migrations
 
                     b.Property<string>("Role")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("User");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
