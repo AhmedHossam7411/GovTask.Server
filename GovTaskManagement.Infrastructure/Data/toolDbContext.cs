@@ -23,23 +23,32 @@ namespace GovTaskManagement.Infrastructure.Data
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ToolDbContext).Assembly);
 
+
             modelBuilder.Entity<ApiUser>()
              .HasMany(u => u.Tasks)
               .WithMany(t => t.Users)
                .UsingEntity(j => j.ToTable("Users-Tasks"));
-
-           
+         
            modelBuilder.Entity<DocumentEntity>()
            .HasOne(d => d.Task)             
            .WithMany(t => t.Documents)      
            .HasForeignKey(d => d.TaskId)    
-           .OnDelete(DeleteBehavior.Restrict); 
+           .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ApiUser>()
                 .HasOne(u => u.Department)
                 .WithMany(d => d.Users)
                 .HasForeignKey(u => u.DepartmentId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<ApiUser>()
+                .HasIndex(u => u.UserName)
+               .IsUnique();
+             modelBuilder.Entity<ApiUser>()
+                .Property(u => u.UserName)
+                .IsRequired();
+            modelBuilder.Entity<ApiUser>()
+                .Property(u => u.Role)
+                .HasDefaultValue("User");
 
             modelBuilder.Entity<DepartmentEntity>()
             .HasMany(u => u.Tasks)

@@ -12,12 +12,10 @@ namespace GovTaskManagement.Application.Dtos
         [Required]
         public string userName { get; set; }
         [Required]
-        
         [EmailAddress]
         public string email { get; set; }
         [Required]
         public string password { get; set; }
-        [Required]
-        public string role { get; set; }
+
     }
 }

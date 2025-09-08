@@ -13,32 +13,32 @@ namespace GovTaskManagement.Infrastructure.Repositories
 {
     public class UserRepository : GenericRepository<ApiUser> , IUserRepository
     {
-        private readonly UserManager<ApiUser> userManager;
-        private readonly DbContext context;
+        private readonly UserManager<ApiUser> _userManager;
+        private readonly ToolDbContext _context;
         
         public UserRepository(UserManager<ApiUser> _userManager , ToolDbContext _context) : base(_context)
         {
-            userManager = _userManager;
-            context = _context;
+            _userManager = userManager;
+            _context = context;
             
         }
 
 
         public async Task<bool> CheckPasswordAsync(ApiUser user, string password)
         {
-            return await userManager.CheckPasswordAsync(user, password);
+            return await _userManager.CheckPasswordAsync(user, password);
         }
 
         public async Task<IdentityResult> CreateUserAsync(ApiUser user, string password )
         {
-           return await userManager.CreateAsync(user, password);
+           return await _userManager.CreateAsync(user, password);
             
         }
 
         public async Task<bool> DeleteUserAsync(ApiUser user)
         {
            
-            var deleted = await userManager.DeleteAsync(user);
+            var deleted = await _userManager.DeleteAsync(user);
             if (deleted.Succeeded)
             { 
                 return true;
@@ -52,25 +52,36 @@ namespace GovTaskManagement.Infrastructure.Repositories
             return user != null;
         }
 
+        public async Task<bool> FindByRoleAndDepartmentAsync(string role, int departmentId)
+        {
+            return await _context.Users.Where(u => u.DepartmentId == departmentId)
+                .AnyAsync(u => _userManager.IsInRoleAsync(u, role).Result);
+        }
+
+        public async Task<bool> FindByRoleAsync(string role)
+        {
+            return await _context.Users.AnyAsync(u => _userManager.IsInRoleAsync(u , role).Result);
+        }
+
         public override async Task<IEnumerable<ApiUser>> GetAllAsync()
         {
-            return userManager.Users;
+            return await _userManager.Users.ToListAsync();
         }
 
         public override async Task<ApiUser> GetAsync(int id)
         {
-            return await userManager.FindByIdAsync(id.ToString());
+            return await _userManager.FindByIdAsync(id.ToString());
         }
 
         public async Task<ApiUser> SearchByEmailAsync(string email)
         {
-            return await userManager.FindByEmailAsync(email);
+            return await _userManager.FindByEmailAsync(email);
         }
 
         public async Task<string> UpdateUserAsync(ApiUser entity)
         {
-            await userManager.UpdateAsync(entity);
-            return entity.ConcurrencyStamp;
+            var update = await _userManager.UpdateAsync(entity);
+            return update.Succeeded ? "success" : "failed";
         }
     }
 }

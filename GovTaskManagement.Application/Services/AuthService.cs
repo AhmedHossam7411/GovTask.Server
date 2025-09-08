@@ -1,81 +1,70 @@
 ﻿using GovTaskManagement.Application.Dtos;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Application.Interfaces.Repositories;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
+using GovTaskManagement.Domain.Entities;
+using Microsoft.Extensions.Configuration;
+
 
 namespace GovTaskManagement.Application.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly IUnitOfWork UnitOfWork;
-
-        public AuthService(IUnitOfWork _unitOfWork , IUserRepository _userRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
+        public AuthService(IConfiguration config, IUnitOfWork unitOfWork, IUserRepository _userRepository)
         {
-            UnitOfWork = _unitOfWork;
-            
+            _unitOfWork = unitOfWork;
+            _configuration = config;
         }
-        public async Task<bool> LoginAsync(LoginRequestDto loginDto)
+        public async Task<string?> LoginAsync(LoginRequestDto loginDto)
         {
-            try
-            {
-                var userExists = await UnitOfWork.UserRepository.SearchByEmailAsync(loginDto.email);
-                if (userExists == null)
-                    return false; 
+            var userExists = await _unitOfWork.UserRepository.SearchByEmailAsync(loginDto.email);
+            if (userExists is null)
+                return null;
 
-                var logged = await UnitOfWork.UserRepository.CheckPasswordAsync(userExists, loginDto.password);
-                return logged; 
-            }
-            catch (Exception)
-            {
+            var validPassword = await _unitOfWork.UserRepository.CheckPasswordAsync(userExists, loginDto.password);
+            if (validPassword is false)
+                return null;
 
-                throw;
-            }
+            var token = JwtTokenGenerator.GenerateToken(userExists,
+                _configuration["Jwt:Key"],
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"]
+                );
+            await _unitOfWork.SaveChangesAsync();
+            return token;
+
         }
-        public async Task<IdentityResult> RegisterAsync(RegisterRequestDto registerDto)
+        public async Task<string?> RegisterAsync(RegisterRequestDto registerDto)
         {
-            try
+            var user = new ApiUser
             {
-                var existingUser = await UnitOfWork.UserRepository.SearchByEmailAsync(registerDto.email);
-                if (existingUser != null )
+                UserName = registerDto.userName,
+                Email = registerDto.email,
+            };
+            var result = await _unitOfWork.UserRepository.CreateUserAsync(user, registerDto.password);
+
+            if (!result.Succeeded)
+            {
+
+                foreach (var error in result.Errors)
                 {
-                    return IdentityResult.Failed(new IdentityError
-                    {
-                        Description = "User already exists."
-                    }); // User already exists
+                    Console.WriteLine(error.Description);
                 }
-                var user = new ApiUser
-                {
-                    UserName = registerDto.userName,
-                    Email = registerDto.email,
-                    
-                };
-                var result = await UnitOfWork.UserRepository.CreateUserAsync(user, registerDto.password);
-
-                if (!result.Succeeded)
-                {
-                    
-                    foreach (var error in result.Errors)
-                    {
-                        Console.WriteLine(error.Description);
-                    }
-                }
-
-                return result;
-
             }
-            catch (Exception)
-            {
+            var token = JwtTokenGenerator.GenerateToken(user,
+                _configuration["Jwt:Key"],
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"]
+                );
+            await _unitOfWork.SaveChangesAsync();
+            return token;
 
-                throw;
-            }
         }
-        
-
     }
 }
+
+        
+         
+
+   

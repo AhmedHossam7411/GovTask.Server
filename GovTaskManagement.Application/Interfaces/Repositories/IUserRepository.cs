@@ -10,7 +10,13 @@ namespace GovTaskManagement.Application.Interfaces.Repositories
         Task<IdentityResult> CreateUserAsync(ApiUser user, string password);
 
         Task<ApiUser> SearchByEmailAsync(string email);
-
-        Task<string> UpdateUserAsync(ApiUser entity);  
+        Task<IEnumerable<ApiUser>> GetAllAsync();
+        Task<ApiUser> GetAsync(int id);
+        Task<bool> ExistsAsync(int id);
+        Task<bool> DeleteUserAsync(ApiUser user);
+       
+        Task<string> UpdateUserAsync(ApiUser entity);
+        Task<bool> FindByRoleAndDepartmentAsync(string role, int departmentId);
+        Task<bool> FindByRoleAsync(string role);
     }
 }

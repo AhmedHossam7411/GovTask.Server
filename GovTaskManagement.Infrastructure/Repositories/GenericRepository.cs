@@ -13,17 +13,17 @@ namespace GovTaskManagement.Infrastructure.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     {
-        private readonly ToolDbContext context;
+        private readonly ToolDbContext _context;
         
         public GenericRepository(ToolDbContext _context )
         {
-            context = _context;
+            this._context = _context;
             
         }
 
         public virtual async Task<T> CreateAsync(T entity)
         {
-            await context.Set<T>().AddAsync(entity);
+            await _context.Set<T>().AddAsync(entity);
             
             return entity;
         }
@@ -33,7 +33,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
             var entity = await GetAsync(id);
             if (entity != null)
             {
-                context.Set<T>().Remove(entity);
+                _context.Set<T>().Remove(entity);
                 
                 return true;
             }
@@ -41,28 +41,28 @@ namespace GovTaskManagement.Infrastructure.Repositories
         }
         public virtual async Task<bool> ExistsAsync(int id)
         {
-            var exists = await context.Set<T>().FindAsync(id) != null;
+            var exists = await _context.Set<T>().FindAsync(id) != null;
             
             return exists;
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            var getAll = await context.Set<T>().ToListAsync();
+            var getAll = await _context.Set<T>().ToListAsync();
             
             return getAll;
         }
 
         public virtual async Task<T> GetAsync(int id)
         {
-            var get = await context.Set<T>().FindAsync(id);
+            var get = await _context.Set<T>().FindAsync(id);
             
             return get;
         }
 
         public virtual async Task<T> UpdateAsync(T entity)
         {
-            var updated = context.Set<T>().Update(entity);
+            var updated = _context.Set<T>().Update(entity);
             
             return updated.Entity;
         }
