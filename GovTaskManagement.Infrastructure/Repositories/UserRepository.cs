@@ -16,7 +16,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
         private readonly UserManager<ApiUser> _userManager;
         private readonly ToolDbContext _context;
         
-        public UserRepository(UserManager<ApiUser> userManager , ToolDbContext context) : base(context)
+        public UserRepository(UserManager<ApiUser> _userManager , ToolDbContext _context) : base(_context)
         {
             _userManager = userManager;
             _context = context;

@@ -1,6 +1,7 @@
 ﻿using GovTaskManagement.Application.Interfaces.Repositories;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 using GovTaskManagement.Application.Services;
+using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;
 using GovTaskManagement.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication;
