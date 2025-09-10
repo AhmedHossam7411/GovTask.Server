@@ -3,12 +3,6 @@ using GovTaskManagement.Application.Dtos;
 using GovTaskManagement.Application.Interfaces.Repositories;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 using GovTaskManagement.Application.Mappers;
-using GovTaskManagement.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Services
 {

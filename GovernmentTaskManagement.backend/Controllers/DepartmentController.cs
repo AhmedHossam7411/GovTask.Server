@@ -30,7 +30,7 @@ namespace GovernmentTaskManagement.Api.Controllers
         }
 
         
-        [HttpGet("{id}")]
+        [HttpGet("By-Id")]
         public async Task<ActionResult<DepartmentDto>> GetDepartmentbyId(int deptId)
         {
             var departmentEntity = await DepartmentService.GetDepartmentById(deptId);
@@ -43,7 +43,7 @@ namespace GovernmentTaskManagement.Api.Controllers
             return Ok(dto);
         }
 
-        [HttpGet("by-taskId/{taskid}")]
+        [HttpGet("by-taskId")]
         public async Task<IActionResult> GetDeptByTaskId(int taskId)
         {
             var dept = await DepartmentService.GetDepartmentByTaskId(taskId);
@@ -51,7 +51,7 @@ namespace GovernmentTaskManagement.Api.Controllers
             return Ok(dto);
         }
 
-        [HttpGet("by-UserId/{userid}")]
+        [HttpGet("by-UserId")]
         public async Task<IActionResult> GetDeptByUserId(string userId)
         {
             var dept = await DepartmentService.GetDepartmentByUserId(userId);
@@ -93,7 +93,7 @@ namespace GovernmentTaskManagement.Api.Controllers
         }
 
         // DELETE: api/DepartmentEntities/5
-        [HttpDelete("{id}")]
+        [HttpDelete("")]
         public async Task<IActionResult> DeleteDepartmentEntity(int deptId)
         {
             var departmentEntity = await DepartmentService.DeleteDepartment(deptId);

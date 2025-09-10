@@ -2,12 +2,6 @@
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GovTaskManagement.Infrastructure.Repositories
 {
@@ -15,21 +9,11 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
     {
         private readonly ToolDbContext context;
-
-
         public DepartmentRepository(ToolDbContext _context) : base(_context)
         {
             context = _context;
 
         }
-
-        //public async Task<DepartmentEntity> GetDepartmentByDocumentId(int documentId)
-        //{
-        //    var department = await context.Departments.Include(dep => dep.Documents)
-        //         .FirstOrDefaultAsync(dep => dep.Documents.Any(doc => doc.Id == documentId));
-        //    return department != null ? department : null;
-        //}
-
         public async Task<DepartmentEntity?> GetDepartmentByTaskId(int taskId)
         {
             return await context.Departments.Include(dep => dep.Tasks)
@@ -39,8 +23,10 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         public async Task<DepartmentEntity?> GetDepartmentByUserId(string userId)
         {
-             return await context.Departments.Include(dep => dep.Users)
-                .FirstOrDefaultAsync(dep => dep.Users.Any(user => user.Id == userId));
+            var userID = context.UserClaims.FirstOrDefault(c => c.ClaimValue == userId)?.ClaimValue;
+            
+            return await context.Departments.Include(dep => dep.Users)
+                .FirstOrDefaultAsync(dep => dep.Users.Any(user => user.Id == userID));
             
         }
     }

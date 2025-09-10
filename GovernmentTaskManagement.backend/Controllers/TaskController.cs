@@ -1,10 +1,8 @@
 ﻿using GovTaskManagement.Application.Dtos;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
-using GovTaskManagement.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using System.Security.Claims;
 
 
