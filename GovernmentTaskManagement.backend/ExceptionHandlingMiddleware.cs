@@ -5,9 +5,9 @@ using System.Net;
 
 public class ExceptionHandlingMiddleware : IExceptionHandler
 {
-    private readonly ILogger _logger;
+    private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-    public ExceptionHandlingMiddleware(ILogger logger)
+    public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger)
     {
         _logger = logger;
     }
@@ -31,9 +31,15 @@ public class ExceptionHandlingMiddleware : IExceptionHandler
                 problemDetails.Status = (int)HttpStatusCode.Unauthorized;
                 break;
 
+            case InvalidOperationException:
+                problemDetails.Title = exception.GetType().Name;
+                problemDetails.Status = (int)HttpStatusCode.Unauthorized;
+                problemDetails.Detail = exception.Message;
+                break;
             default:
                 problemDetails.Title = "Internal Server Error";
                 problemDetails.Status = (int)HttpStatusCode.InternalServerError;
+                problemDetails.Detail = exception.Message;
                 break;
         }
         httpContext.Response.StatusCode = (int)problemDetails.Status;

@@ -30,7 +30,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
         {
             var token = await AuthService.LoginAsync(loginRequest);
             if(token == null)
-            {
+            {             
               return Unauthorized("login failed");
             }
             return Ok(new {Token = token});

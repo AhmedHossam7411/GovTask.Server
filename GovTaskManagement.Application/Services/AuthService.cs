@@ -46,12 +46,9 @@ namespace GovTaskManagement.Application.Services
 
             if (!result.Succeeded)
             {
-
-                foreach (var error in result.Errors)
-                {
-                    Console.WriteLine(error.Description);
-                }
+                throw new InvalidOperationException(string.Join(',',result.Errors.Select(e=>e.Description)));
             }
+
             var token = JwtTokenGenerator.GenerateToken(user,
                 _configuration["Jwt:Key"],
                 _configuration["Jwt:Issuer"],

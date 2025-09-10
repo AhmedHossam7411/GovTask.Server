@@ -23,10 +23,11 @@ namespace GovTaskManagement.Application.Services
             TaskRepository = _taskRepository;
             
         }
-        public async Task<TaskDto> CreateTask(TaskDto dto)
+        public async Task<TaskDto> CreateTask(TaskDto dto , string creatorId)
         {
             var entity = dto.ToEntity();
             var createdEntity = await UnitOfWork.TasksRepository.CreateAsync(entity);
+            createdEntity.creatorId = creatorId;
             await UnitOfWork.SaveChangesAsync();
             return createdEntity.ToDto();
         }
@@ -75,6 +76,12 @@ namespace GovTaskManagement.Application.Services
         {
             var tasks = await UnitOfWork.TasksRepository.GetTasksByDepartmentId(departmentId);
             return tasks.ToDto();
+        }
+        public async Task<IEnumerable<TaskDto>> GetTasksByCreatorId(string creatorId)
+        {
+            var tasks = await UnitOfWork.TasksRepository.GetTasksByCreatorId(creatorId);
+            return tasks.ToDto();
+
         }
     }
 }

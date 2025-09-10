@@ -12,6 +12,6 @@ namespace GovTaskManagement.Application.Interfaces.ServiceInterfaces
 
         Task<DepartmentEntity?> GetDepartmentByTaskId(int taskId);
         
-        Task<DepartmentEntity?> GetDepartmentByUserId(int userId);
+        Task<DepartmentEntity?> GetDepartmentByUserId(string userId);
     }
 }

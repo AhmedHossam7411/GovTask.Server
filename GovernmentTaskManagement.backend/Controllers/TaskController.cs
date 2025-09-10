@@ -1,15 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using GovTaskManagement.Domain.Entities;
-using Microsoft.Extensions.Caching.Memory;
-using GovTaskManagement.Application.Dtos;
+﻿using GovTaskManagement.Application.Dtos;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
+using GovTaskManagement.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using System.Security.Claims;
 
 
 namespace GovernmentTaskManagement.Api.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "User")]
     public class TaskController : ControllerBase
     {
         
@@ -23,16 +26,20 @@ namespace GovernmentTaskManagement.Api.Endpoints
 
         // GET: api/TaskEntities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskDto>>> GetTasks()
+        public async Task<ActionResult<IEnumerable<TaskDto>>> GetTasks()   
         {
             var tasks = await TaskService.GetAllTasks();
             return Ok(tasks);
         }
-
+        [HttpGet("by-Creator/{creatorid}")]
+        public async Task<ActionResult<IEnumerable<TaskDto>>> GetTasksByCreatorId(string id)   
+        {
+            var tasks = await TaskService.GetTasksByCreatorId(id);
+            return Ok(tasks);
+        }
         // GET: api/TaskEntities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaskDto>> GetTask(int id)
-        {
+        public async Task<ActionResult<TaskDto>> GetTask(int id) { 
             var taskDto = await TaskService.GetTaskById(id);
 
             if (taskDto == null)
@@ -67,12 +74,10 @@ namespace GovernmentTaskManagement.Api.Endpoints
             return Ok(taskDto);
         }
 
-        // PUT: api/TaskEntities/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTask(int id, TaskDto dto)
+        public async Task<IActionResult> PutTask(string name, TaskDto dto)
         {
-            if (id != dto.Id)
+            if (name != dto.Name)
             {
                 return BadRequest();
             }
@@ -90,14 +95,11 @@ namespace GovernmentTaskManagement.Api.Endpoints
 
         }
 
-
-        // POST: api/TaskEntities
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<TaskDto>> PostTask(TaskDto dto)
         {
-            
-            var created = await TaskService.CreateTask(dto);
+            var CreatorId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var created = await TaskService.CreateTask(dto,CreatorId);
             return Ok(created);
         }
 

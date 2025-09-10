@@ -1,11 +1,16 @@
-﻿using GovTaskManagement.Application.Interfaces;
+﻿using GovTaskManagement.Application.Dtos;
+using GovTaskManagement.Application.Interfaces;
 using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Application.Services;
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 namespace GovTaskManagement.Infrastructure.Repositories
@@ -35,14 +40,21 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         }
 
-        public async Task<IEnumerable<TaskEntity>> GetTasksByUserId(int userId)
+        public async Task<IEnumerable<TaskEntity>> GetTasksByUserId(string userId)
         {
             var tasks = await context.Tasks.Include(t => t.Users)
                 .Where(u => u.Users.Any(u => u.Id == userId))
                 .ToListAsync();
             return tasks;
         }
+        public async Task<IEnumerable<TaskEntity>> GetTasksByCreatorId(string creatorId)
+        { 
+            var creatorID = context.UserClaims.FirstOrDefault(c => c.ClaimValue == creatorId)?.ClaimValue;
+            var tasks = await context.Tasks.Include(t => t.Name)
+                .Where(t => t.creatorId == creatorId).ToListAsync();
+            return tasks;
 
-       
+        }
+
     }
 }

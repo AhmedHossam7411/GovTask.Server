@@ -6,6 +6,6 @@ namespace GovTaskManagement.Application.Interfaces.Repositories
     {
         Task<DepartmentEntity> GetDepartmentByTaskId(int taskId);
         
-        Task<DepartmentEntity> GetDepartmentByUserId(int userId);
+        Task<DepartmentEntity> GetDepartmentByUserId(string userId);
     }
 }

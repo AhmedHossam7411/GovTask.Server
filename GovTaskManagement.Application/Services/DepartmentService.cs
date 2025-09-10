@@ -56,7 +56,7 @@ namespace GovTaskManagement.Application.Services
             return dept;
         }
 
-        public async Task<DepartmentEntity?> GetDepartmentByUserId(int userId)
+        public async Task<DepartmentEntity?> GetDepartmentByUserId(string userId)
         {
             var dept = await UnitOfWork.DepartmentRepository.GetDepartmentByUserId(userId);
             return dept;

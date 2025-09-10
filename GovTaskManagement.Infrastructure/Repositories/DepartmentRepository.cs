@@ -37,7 +37,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
             
         }
 
-        public async Task<DepartmentEntity?> GetDepartmentByUserId(int userId)
+        public async Task<DepartmentEntity?> GetDepartmentByUserId(string userId)
         {
              return await context.Departments.Include(dep => dep.Users)
                 .FirstOrDefaultAsync(dep => dep.Users.Any(user => user.Id == userId));

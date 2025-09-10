@@ -1,4 +1,5 @@
-﻿using GovTaskManagement.Domain.Entities;
+﻿using GovTaskManagement.Application.Dtos;
+using GovTaskManagement.Domain.Entities;
 
 namespace GovTaskManagement.Application.Interfaces.Repositories
 {
@@ -6,10 +7,7 @@ namespace GovTaskManagement.Application.Interfaces.Repositories
     {
         Task<IEnumerable<TaskEntity>> GetTasksByDepartmentId(int departmentId);
         Task<TaskEntity> GetTaskByDocumentId(int documentId);
-        Task<IEnumerable<TaskEntity>> GetTasksByUserId(int userId);
-
-        
-        
-        
+        Task<IEnumerable<TaskEntity>> GetTasksByUserId(string userId);
+        Task<IEnumerable<TaskEntity>> GetTasksByCreatorId(string creatorId);
     }
 }

@@ -50,12 +50,21 @@ namespace GovTaskManagement.Infrastructure.Data
                 .Property(u => u.Role)
                 .HasDefaultValue("User");
 
+            modelBuilder.Entity<ApiUser>()
+              .HasMany(u => u.CreatedTasks)
+              .WithOne(u => u.creator)
+              .HasForeignKey(u => u.creatorId)
+              .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<DepartmentEntity>()
             .HasMany(u => u.Tasks)
             .WithOne(t => t.Department)
             .HasForeignKey(t => t.DepartmentId)
             .OnDelete(DeleteBehavior.Restrict);
-         }
+
+            
+           
+        }
       
 
     }

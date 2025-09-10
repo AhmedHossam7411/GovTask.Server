@@ -1,23 +1,16 @@
 ﻿using GovTaskManagement.Application.Dtos;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 using GovTaskManagement.Application.Mappers;
-using GovTaskManagement.Application.System_Collections.Mappers;
-using GovTaskManagement.Domain.Entities;
-using GovTaskManagement.Infrastructure.Data;
-using GovTaskManagement.Infrastructure.Repositories;
-using Humanizer;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace GovernmentTaskManagement.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "User")]
     public class DepartmentController : ControllerBase
     {
         private readonly IDepartmentService DepartmentService;
@@ -27,8 +20,8 @@ namespace GovernmentTaskManagement.Api.Controllers
             DepartmentService = _departmentService;
         }
 
-        // GET: api/DepartmentEntities
-        [HttpGet]
+        
+        [HttpGet("AllDepartments")]
         public async Task<ActionResult<IEnumerable<DepartmentDto>>> GetDepartments()
         { 
             var depts = await DepartmentService.GetAllDepartments();
@@ -36,7 +29,7 @@ namespace GovernmentTaskManagement.Api.Controllers
             return Ok(dto);
         }
 
-        // GET: api/DepartmentEntities/5
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<DepartmentDto>> GetDepartmentbyId(int deptId)
         {
@@ -59,15 +52,13 @@ namespace GovernmentTaskManagement.Api.Controllers
         }
 
         [HttpGet("by-UserId/{userid}")]
-        public async Task<IActionResult> GetDeptByUserId(int userId)
+        public async Task<IActionResult> GetDeptByUserId(string userId)
         {
             var dept = await DepartmentService.GetDepartmentByUserId(userId);
             var dto = dept.ToDto();
             return Ok(dto);
         }
 
-        // PUT: api/DepartmentEntities/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDepartment(int id, DepartmentDto dto)
         {

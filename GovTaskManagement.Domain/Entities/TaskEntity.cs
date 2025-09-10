@@ -13,6 +13,8 @@ namespace GovTaskManagement.Domain.Entities
         public string Description { get; set; }
         public DateTime DueDate { get; set; }
 
+        public ApiUser creator { get; set; }
+        public string creatorId { get; set; }
         public int? DepartmentId { get; set; }          
         public DepartmentEntity? Department { get; set; } 
 

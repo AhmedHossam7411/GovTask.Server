@@ -13,7 +13,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     {
-        private readonly ToolDbContext _context;
+        protected readonly ToolDbContext _context;
         
         public GenericRepository(ToolDbContext _context )
         {

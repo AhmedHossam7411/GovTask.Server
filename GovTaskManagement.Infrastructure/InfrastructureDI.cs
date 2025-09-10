@@ -39,11 +39,13 @@ namespace GovTaskManagement.Infrastructure
 
             var jwtKey = Configuration["Jwt:Key"];
             var jwtIssuer = Configuration["Jwt:Issuer"];
+            var jwtAud = Configuration["Jwt:Audience"];
 
             Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+               
             })
             .AddJwtBearer(options =>
             {
@@ -54,7 +56,7 @@ namespace GovTaskManagement.Infrastructure
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtIssuer,
-                    ValidAudience = jwtIssuer,
+                    ValidAudience = jwtAud,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
                 };
             });

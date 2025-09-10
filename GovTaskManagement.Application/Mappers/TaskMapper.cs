@@ -14,11 +14,9 @@ namespace GovTaskManagement.Application.Mappers
         {
             return new TaskDto
             {
-                Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 DueDate = entity.DueDate,
-                DepartmentId = entity.DepartmentId
             };
         }
 
@@ -30,10 +28,9 @@ namespace GovTaskManagement.Application.Mappers
         {
             return new TaskEntity
             {
-                Id = dto.Id,
                 Name = dto.Name,
                 Description = dto.Description,
-                DueDate = dto.DueDate
+                DueDate = dto.DueDate,
             };
         }
     }
