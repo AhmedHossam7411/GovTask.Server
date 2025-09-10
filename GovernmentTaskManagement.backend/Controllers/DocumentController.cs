@@ -4,16 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using GovTaskManagement.Domain.Entities;
-using GovTaskManagement.Infrastructure.Data;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 using GovTaskManagement.Application.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GovernmentTaskManagement.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "User")]
     public class DocumentController : ControllerBase
     {
         private readonly IDocumentService _documentService;
@@ -23,14 +22,13 @@ namespace GovernmentTaskManagement.Api.Controllers
             _documentService = documentService;
         }
 
-        [HttpGet]
+        [HttpGet("AllDocuments")]
         public async Task<ActionResult<IEnumerable<DocumentDto>>> GetDocuments()
         {
             return Ok(await _documentService.GetAllDocuments());
         }
 
-        // GET: api/Document/5
-        [HttpGet("{id}")]
+        [HttpGet("by-Id")]
         public async Task<ActionResult<DocumentDto>> GetDocumentById(int documentId)
         {
             var document = await _documentService.GetDocumentById(documentId);
@@ -43,7 +41,7 @@ namespace GovernmentTaskManagement.Api.Controllers
             return Ok(document);
         }
 
-        [HttpGet("by-Task/{id}")]
+        [HttpGet("by-Task")]
         public async Task<ActionResult<DocumentDto>> GetDocumentByTaskId(int documentId)
         {
             var documents = await _documentService.GetDocumentsByTaskId(documentId);
@@ -69,7 +67,7 @@ namespace GovernmentTaskManagement.Api.Controllers
             return Ok(document);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete")]
         public async Task<IActionResult> DeleteDocumentDto(int documentId)
         {
             var document = await _documentService.DeleteDocument(documentId);
