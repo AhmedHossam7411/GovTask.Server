@@ -32,7 +32,7 @@ namespace GovernmentTaskManagement.Api.Controllers
         }
 
         
-        [HttpGet("{id}")]
+        [HttpGet("by-Id")]
         public async Task<ActionResult<DocumentDto>> GetDocumentById(int documentId)
         {
             var document = await _documentService.GetDocumentById(documentId);
@@ -45,7 +45,7 @@ namespace GovernmentTaskManagement.Api.Controllers
             return Ok(document);
         }
 
-        [HttpGet("by-Task/{id}")]
+        [HttpGet("by-Task")]
         public async Task<ActionResult<DocumentDto>> GetDocumentByTaskId(int documentId)
         {
             var documents = await _documentService.GetDocumentsByTaskId(documentId);
@@ -71,7 +71,7 @@ namespace GovernmentTaskManagement.Api.Controllers
             return Ok(document);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete")]
         public async Task<IActionResult> DeleteDocumentDto(int documentId)
         {
             var document = await _documentService.DeleteDocument(documentId);
