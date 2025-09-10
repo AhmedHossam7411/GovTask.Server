@@ -25,13 +25,13 @@ namespace GovernmentTaskManagement.Api.Controllers
             _documentService = documentService;
         }
 
-        [HttpGet]
+        [HttpGet("AllDocuments")]
         public async Task<ActionResult<IEnumerable<DocumentDto>>> GetDocuments()
         {
             return Ok(await _documentService.GetAllDocuments());
         }
 
-        // GET: api/Document/5
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<DocumentDto>> GetDocumentById(int documentId)
         {

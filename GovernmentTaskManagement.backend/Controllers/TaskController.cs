@@ -25,7 +25,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
         }
 
         // GET: api/TaskEntities
-        [HttpGet]
+        [HttpGet("AllTasks")]
         public async Task<ActionResult<IEnumerable<TaskDto>>> GetTasks()   
         {
             var tasks = await TaskService.GetAllTasks();
