@@ -31,5 +31,6 @@ app.UseHttpsRedirection();
 app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors("AllowAngular");
 app.MapControllers();
 app.Run();
