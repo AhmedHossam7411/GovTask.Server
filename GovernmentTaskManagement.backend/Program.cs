@@ -36,9 +36,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
+app.UseCors("AllowAngular");
 app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCors("AllowAngular");
 app.MapControllers();
 app.Run();

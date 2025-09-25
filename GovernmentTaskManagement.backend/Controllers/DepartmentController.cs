@@ -20,18 +20,18 @@ namespace GovernmentTaskManagement.Api.Controllers
             DepartmentService = _departmentService;
         }
 
-        
+
         [HttpGet("AllDepartments")]
         public async Task<ActionResult<IEnumerable<DepartmentDto>>> GetDepartments()
-        { 
+        {
             var depts = await DepartmentService.GetAllDepartments();
             var dto = depts.ToDto();
             return Ok(dto);
         }
 
-        
-        [HttpGet("By-Id")]
-        public async Task<ActionResult<DepartmentDto>> GetDepartmentbyId(int deptId)
+
+        [HttpGet("By-Id/{deptId}")]
+        public async Task<ActionResult<DepartmentDto>> GetDepartmentbyId([FromRoute]int deptId)
         {
             var departmentEntity = await DepartmentService.GetDepartmentById(deptId);
 
