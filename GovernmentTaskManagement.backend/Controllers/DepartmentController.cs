@@ -60,7 +60,7 @@ namespace GovernmentTaskManagement.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDepartment(int id, DepartmentDto dto)
+        public async Task<IActionResult> PutDepartment([FromRoute] int id, DepartmentDto dto)
         {
             if (id != dto.Id)
             {
@@ -93,10 +93,10 @@ namespace GovernmentTaskManagement.Api.Controllers
         }
 
         // DELETE: api/DepartmentEntities/5
-        [HttpDelete("")]
-        public async Task<IActionResult> DeleteDepartmentEntity(int deptId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteDepartmentEntity([FromRoute] int id)
         {
-            var departmentEntity = await DepartmentService.DeleteDepartment(deptId);
+            var departmentEntity = await DepartmentService.DeleteDepartment(id);
             if (departmentEntity == true)
             {
                 return Ok();
