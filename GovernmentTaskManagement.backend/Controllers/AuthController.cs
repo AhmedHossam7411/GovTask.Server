@@ -18,7 +18,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
-            var token = await AuthService.RegisterAsync(registerRequestDto);
+            var token = await AuthService.RegisterAsync(registerRequestDto);                   
             if(token == null)
             {
                 return BadRequest("registration failed");

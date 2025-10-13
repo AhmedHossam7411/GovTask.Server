@@ -10,7 +10,7 @@ namespace GovTaskManagement.Application.Dtos
     public class RegisterRequestDto
     {
         [Required]
-        public string userName { get; set; }
+        public string UserName { get; set; }
         [Required]
         [EmailAddress]
         public string email { get; set; }

@@ -39,8 +39,9 @@ namespace GovTaskManagement.Application.Services
         {
             var user = new ApiUser
             {
-                UserName = registerDto.userName,
+                UserName = registerDto.UserName,
                 Email = registerDto.email,
+                DepartmentId = 1
             };
             var result = await _unitOfWork.UserRepository.CreateUserAsync(user, registerDto.password);
 

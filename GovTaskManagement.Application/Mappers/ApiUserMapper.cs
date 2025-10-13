@@ -10,7 +10,6 @@ namespace GovTaskManagement.Application.Mappers
             return new ApiUserDto
             {
                 Role = entity.Role,
-                DepartmentId = entity.DepartmentId,
                 Tasks = entity.Tasks.Select(u => u.ToDto()).ToList(),
                 CreatedTasks = entity.CreatedTasks.Select(u => u.ToDto()).ToList(),
             };
@@ -21,7 +20,6 @@ namespace GovTaskManagement.Application.Mappers
             return new ApiUser
             {
                 Role = dto.Role,
-                DepartmentId = dto.DepartmentId,
                 Tasks = dto.Tasks.Select(u => u.ToEntity()).ToList(),
                 CreatedTasks = dto.CreatedTasks.Select(u => u.ToEntity()).ToList(),
 

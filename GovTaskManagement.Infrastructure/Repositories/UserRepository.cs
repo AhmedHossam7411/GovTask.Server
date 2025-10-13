@@ -30,7 +30,16 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         public async Task<IdentityResult> CreateUserAsync(ApiUser user, string password )
         {
+            try
+            {
            return await _userManager.CreateAsync(user, password);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
             
         }
 
