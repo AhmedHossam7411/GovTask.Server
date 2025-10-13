@@ -79,6 +79,8 @@ namespace GovernmentTaskManagement.Api.Endpoints
             {
                 return BadRequest();
             }
+            if (dto.DepartmentId <= 0)
+                return BadRequest("DepartmentId is required and must be valid.");
 
             try
             {
@@ -96,6 +98,8 @@ namespace GovernmentTaskManagement.Api.Endpoints
         [HttpPost]
         public async Task<ActionResult<TaskDto>> PostTask(TaskDto dto)
         {
+            if (dto.DepartmentId <= 0)
+                return BadRequest("DepartmentId is required and must be valid.");
             var CreatorId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             var created = await TaskService.CreateTask(dto,CreatorId);
             return Ok(created);
