@@ -22,7 +22,7 @@ namespace GovernmentTaskManagement.Api.Controllers
 
 
         [HttpGet("AllDepartments")]
-        public async Task<ActionResult<IEnumerable<DepartmentDto>>> GetDepartments()
+        public async Task<ActionResult<IEnumerable<ApiUserDto>>> GetDepartments()
         {
             var depts = await DepartmentService.GetAllDepartments();
             var dto = depts.ToDto();
@@ -31,7 +31,7 @@ namespace GovernmentTaskManagement.Api.Controllers
 
 
         [HttpGet("By-Id/{deptId}")]
-        public async Task<ActionResult<DepartmentDto>> GetDepartmentbyId([FromRoute]int deptId)
+        public async Task<ActionResult<ApiUserDto>> GetDepartmentbyId([FromRoute]int deptId)
         {
             var departmentEntity = await DepartmentService.GetDepartmentById(deptId);
 
@@ -84,7 +84,7 @@ namespace GovernmentTaskManagement.Api.Controllers
         // POST: api/DepartmentEntities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<DepartmentDto>> PostDepartment(DepartmentDto dto)
+        public async Task<ActionResult<ApiUserDto>> PostDepartment(DepartmentDto dto)
         {
             var entity = dto.ToEntity();
             var created = await DepartmentService.CreateDepartment(entity);

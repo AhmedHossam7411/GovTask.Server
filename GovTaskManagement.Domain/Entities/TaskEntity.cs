@@ -15,7 +15,7 @@ namespace GovTaskManagement.Domain.Entities
 
         public ApiUser creator { get; set; }
         public string creatorId { get; set; }
-        public int? DepartmentId { get; set; }          
+        public int DepartmentId { get; set; }          
         public DepartmentEntity? Department { get; set; } 
 
         public List<DocumentEntity> Documents { get; set; } = new List<DocumentEntity>();

@@ -9,9 +9,8 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 namespace GovTaskManagement.Infrastructure.Data
 {
-    public class ToolDbContext(DbContextOptions<ToolDbContext> options) : IdentityDbContext<ApiUser>(options) // identity enables us to use ASPNET USER AND ROLES tables for auth and authorization
+    public class ToolDbContext(DbContextOptions<ToolDbContext> options) : IdentityDbContext<ApiUser>(options) 
     {
-        //public DbSet<ApiUser> Users { get; set; }
         public DbSet<DocumentEntity> Documents { get; set; }
         public DbSet<DepartmentEntity> Departments { get; set; }
         public DbSet<TaskEntity> Tasks { get; set; }
