@@ -10,7 +10,7 @@ namespace GovernmentTaskManagement.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User")]
+    [Authorize]
     public class DepartmentController : ControllerBase
     {
         private readonly IDepartmentService DepartmentService;

@@ -12,7 +12,7 @@ namespace GovTaskManagement.Domain.Entities
 {
     public static class JwtTokenGenerator
     {
-        public static string GenerateToken(ApiUser user, string secretKey, string issuer, string audience, int expiryMinutes = 60)
+        public static string GenerateToken(ApiUser user,  string secretKey, string issuer, string audience, int expiryMinutes = 60)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

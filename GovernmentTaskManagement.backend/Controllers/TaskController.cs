@@ -10,7 +10,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User")]
+    [Authorize]
     public class TaskController : ControllerBase
     {
         

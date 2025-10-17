@@ -18,7 +18,6 @@ namespace GovTaskManagement.Application.Mappers
                 Description = entity.Description,
                 DueDate = entity.DueDate,
                 creatorId = entity.creatorId,
-                Users = entity.Users?.Select(u => u.ToDto()).ToList(),
                 Documents = entity.Documents?.Select(d => d.ToDto()).ToList(),
                 DepartmentId = entity.DepartmentId
             };
@@ -36,7 +35,6 @@ namespace GovTaskManagement.Application.Mappers
                 Description = dto.Description,
                 DueDate = dto.DueDate,
                 creatorId = dto.creatorId,
-                Users = dto.Users?.Select(u => u.ToEntity()).ToList(),
                 Documents = dto.Documents?.Select(d => d.ToEntity()).ToList(),
                 DepartmentId = dto.DepartmentId
             };
