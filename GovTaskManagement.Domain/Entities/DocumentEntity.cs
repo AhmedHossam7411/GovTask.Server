@@ -14,10 +14,5 @@ namespace GovTaskManagement.Domain.Entities
         public DateTime UploadDate { get; set; }
         public int TaskId { get; set; }
         public TaskEntity Task { get; set; }
-
-        
-
-
-
     }
 }

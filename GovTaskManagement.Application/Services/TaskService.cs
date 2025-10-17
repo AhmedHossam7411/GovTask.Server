@@ -22,7 +22,16 @@ namespace GovTaskManagement.Application.Services
             var entity = dto.ToEntity();
             var createdEntity = await UnitOfWork.TasksRepository.CreateAsync(entity);
             createdEntity.creatorId = creatorId;
+            try
+            {
             await UnitOfWork.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
             return createdEntity.ToDto();
         }
 

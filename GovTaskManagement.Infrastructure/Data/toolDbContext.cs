@@ -14,8 +14,8 @@ namespace GovTaskManagement.Infrastructure.Data
         public DbSet<DocumentEntity> Documents { get; set; }
         public DbSet<DepartmentEntity> Departments { get; set; }
         public DbSet<TaskEntity> Tasks { get; set; }
+        public DbSet<User> Users { get; set; }
 
-     
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -23,7 +23,7 @@ namespace GovTaskManagement.Infrastructure.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ToolDbContext).Assembly);
 
 
-            modelBuilder.Entity<ApiUser>()
+            modelBuilder.Entity<User>()
              .HasMany(u => u.Tasks)
               .WithMany(t => t.Users)
                .UsingEntity(j => j.ToTable("Users-Tasks"));
@@ -34,22 +34,23 @@ namespace GovTaskManagement.Infrastructure.Data
            .HasForeignKey(d => d.TaskId)    
            .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<ApiUser>()
+            modelBuilder.Entity<User>()
                 .HasOne(u => u.Department)
                 .WithMany(d => d.Users)
                 .HasForeignKey(u => u.DepartmentId)
                 .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<ApiUser>()
                 .HasIndex(u => u.UserName)
                .IsUnique();
              modelBuilder.Entity<ApiUser>()
                 .Property(u => u.UserName)
                 .IsRequired();
-            modelBuilder.Entity<ApiUser>()
+            modelBuilder.Entity<User>()
                 .Property(u => u.Role)
                 .HasDefaultValue("User");
 
-            modelBuilder.Entity<ApiUser>()
+            modelBuilder.Entity<User>()
               .HasMany(u => u.CreatedTasks)
               .WithOne(u => u.creator)
               .HasForeignKey(u => u.creatorId)
@@ -61,8 +62,12 @@ namespace GovTaskManagement.Infrastructure.Data
             .HasForeignKey(t => t.DepartmentId)
             .OnDelete(DeleteBehavior.Restrict);
 
-            
-           
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.ApiUserId);
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.ApiUser)
+                .WithOne(a => a.User)
+                .HasForeignKey<User>(u => u.ApiUserId);
         }
       
 

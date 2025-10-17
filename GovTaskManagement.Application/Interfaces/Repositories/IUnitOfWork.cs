@@ -11,6 +11,7 @@ namespace GovTaskManagement.Application.Interfaces.Repositories
         public ITaskRepository TasksRepository { get; } 
         public IDocumentRepository DocumentRepository { get; }
         public IDepartmentRepository DepartmentRepository { get; }
+        public IApiUserRepository ApiUserRepository { get; }
         public IUserRepository UserRepository { get; }
 
         Task<int> SaveChangesAsync();  // Method to save changes asynchronously

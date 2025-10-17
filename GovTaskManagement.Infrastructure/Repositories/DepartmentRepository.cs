@@ -26,7 +26,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
             var userID = context.UserClaims.FirstOrDefault(c => c.ClaimValue == userId)?.ClaimValue;
             
             return await context.Departments.Include(dep => dep.Users)
-                .FirstOrDefaultAsync(dep => dep.Users.Any(user => user.Id == userID));
+                .FirstOrDefaultAsync(dep => dep.Users.Any(user => user.ApiUserId == userID));
             
         }
     }

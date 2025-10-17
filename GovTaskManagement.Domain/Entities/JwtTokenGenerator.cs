@@ -16,12 +16,10 @@ namespace GovTaskManagement.Domain.Entities
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-           
             var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Name,user.UserName),
-            new Claim(ClaimTypes.Role, user.Role)
         };
 
             var token = new JwtSecurityToken(

@@ -1,9 +1,6 @@
 ﻿using GovTaskManagement.Application.Interfaces.Repositories;
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Identity;
-using GovTaskManagement.Domain.Entities;
 
 namespace GovTaskManagement.Infrastructure.Repositories
 {
@@ -19,13 +16,15 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         public IUserRepository UserRepository { get; }
 
-       
+        public IApiUserRepository ApiUserRepository {  get; }
+
         public UnitOfWork(
            ToolDbContext context,
            ITaskRepository taskRepository,
            IDocumentRepository documentRepository,
            IDepartmentRepository departmentRepository,
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            IApiUserRepository apiUserRepository
             )
         {
             _context = context;
@@ -33,6 +32,8 @@ namespace GovTaskManagement.Infrastructure.Repositories
             DocumentRepository = documentRepository;
             DepartmentRepository = departmentRepository;
             UserRepository = userRepository;
+            ApiUserRepository = apiUserRepository;
+
         }
 
         public void Dispose()
