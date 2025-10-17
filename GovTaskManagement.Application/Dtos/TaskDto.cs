@@ -17,7 +17,7 @@ namespace GovTaskManagement.Application.Dtos
           public int DepartmentId { get; set; }
           public List<DocumentDto> Documents { get; set; } 
 
-          public ICollection<User> Users { get; set; } 
+          public ICollection<UserDto> Users { get; set; } 
 
     }
 }
