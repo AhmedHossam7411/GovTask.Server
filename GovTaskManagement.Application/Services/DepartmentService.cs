@@ -32,7 +32,16 @@ namespace GovTaskManagement.Application.Services
             var result = await UnitOfWork.DepartmentRepository.DeleteAsync(departmentId);
             if (result)
             {
+                try
+                {
                 await UnitOfWork.SaveChangesAsync();
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
                 return true;
             }
             return false;

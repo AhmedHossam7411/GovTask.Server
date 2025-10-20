@@ -9,12 +9,13 @@ namespace GovTaskManagement.Application.Dtos
 {
     public class TaskDto
     {
+          public int Id { get; set; }
           public string Name { get; set; }
           public string Description { get; set; }
           public DateTime DueDate { get; set; }
 
           public string creatorId { get; set; }
-          public int DepartmentId { get; set; }
+          public int? DepartmentId { get; set; }
           public List<DocumentDto> Documents { get; set; } 
 
           public ICollection<UserInTaskDto> Users { get; set; } 

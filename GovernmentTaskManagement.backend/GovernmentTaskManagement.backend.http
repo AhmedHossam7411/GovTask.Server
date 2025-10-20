@@ -1,4 +1,4 @@
-@GovernmentTaskManagement.backend_HostAddress = http://localhost:5122
+@GovernmentTaskManagement.backend_HostAddress = https://localhost:5122
 
 GET {{GovernmentTaskManagement.backend_HostAddress}}/weatherforecast/
 Accept: application/json

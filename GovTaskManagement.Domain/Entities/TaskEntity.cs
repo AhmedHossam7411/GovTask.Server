@@ -9,7 +9,7 @@
         public User creator { get; set; }
         public string creatorId { get; set; }
         public DepartmentEntity Department { get; set; }
-        public int DepartmentId { get; set; }         
+        public int? DepartmentId { get; set; }         
         public List<DocumentEntity> Documents { get; set; } = new List<DocumentEntity>();
 
         public ICollection<User> Users { get; set; }  

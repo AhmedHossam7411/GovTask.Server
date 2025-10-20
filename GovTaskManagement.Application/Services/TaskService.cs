@@ -38,11 +38,28 @@ namespace GovTaskManagement.Application.Services
 
         public async Task<bool> DeleteTask(int taskId)
         {
+            var documents = await UnitOfWork.DocumentRepository.GetDocumentsByTaskId(taskId);
+            if (documents != null)
+            {
+                foreach (var doc in documents)
+                {
+                    await UnitOfWork.DocumentRepository.DeleteAsync(doc.Id);
+                }
+            }
 
             var result = await UnitOfWork.TasksRepository.DeleteAsync(taskId);
             if (result)
             {
+                try
+                {
                 await UnitOfWork.SaveChangesAsync();
+
+                }
+                catch (Exception ex)
+                {
+                    
+                    throw;
+                }
                 return true;
             }
             return false;

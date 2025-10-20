@@ -10,11 +10,7 @@ namespace GovTaskManagement.Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        public ApiUser? ApiUser { get; set; }  
         public List<User>? Users { get; set; }  
-        
-        public TaskEntity? TaskEntity { get; set; }
         public List<TaskEntity>? Tasks { get; set; }
 
     }

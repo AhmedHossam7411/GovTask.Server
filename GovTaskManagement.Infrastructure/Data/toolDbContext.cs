@@ -38,7 +38,7 @@ namespace GovTaskManagement.Infrastructure.Data
                 .HasOne(u => u.Department)
                 .WithMany(d => d.Users)
                 .HasForeignKey(u => u.DepartmentId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ApiUser>()
                 .HasIndex(u => u.UserName)
@@ -68,6 +68,7 @@ namespace GovTaskManagement.Infrastructure.Data
                 .HasOne(u => u.ApiUser)
                 .WithOne(a => a.User)
                 .HasForeignKey<User>(u => u.ApiUserId);
+
         }
       
 
