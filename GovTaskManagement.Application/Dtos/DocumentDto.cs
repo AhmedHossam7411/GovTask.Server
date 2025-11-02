@@ -11,6 +11,6 @@ namespace GovTaskManagement.Application.Dtos
         string Name,
         string Description,
         DateTime UploadDate,
-        int TaskId
+        int? TaskId
     );
 }

@@ -14,12 +14,11 @@ namespace GovTaskManagement.Application.Mappers
         {
             return new DocumentDto(
 
-               document.Id,
-               document.Name,
-               document.Description,
-               document.UploadDate,
-               document.TaskId
-
+                document.Id,
+                document.Name,
+                document.Description,
+                document.UploadDate,
+                document.TaskId
             );
         }
         public static DocumentEntity ToEntity(this DocumentDto entity)
@@ -30,7 +29,7 @@ namespace GovTaskManagement.Application.Mappers
                 Name = entity.Name,
                 Description = entity.Description,
                 UploadDate = entity.UploadDate,
-                
+                TaskId = entity.TaskId,
             };
         }
         public static IEnumerable<DocumentDto> ToDto(this IEnumerable<DocumentEntity> entities)
