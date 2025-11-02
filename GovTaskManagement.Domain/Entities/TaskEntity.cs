@@ -10,9 +10,9 @@
         public string creatorId { get; set; }
         public DepartmentEntity Department { get; set; }
         public int? DepartmentId { get; set; }         
-        public List<DocumentEntity> Documents { get; set; } = new List<DocumentEntity>();
+        public List<DocumentEntity>? Documents { get; set; } 
 
-        public ICollection<User> Users { get; set; }  
+        public ICollection<User>? Users { get; set; }  
 
 
     }

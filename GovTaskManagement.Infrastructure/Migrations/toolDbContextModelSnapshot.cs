@@ -105,7 +105,7 @@ namespace GovTaskManagement.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("GovTaskManagement.Domain.Entities.DocumentEntity", b =>
@@ -134,7 +134,7 @@ namespace GovTaskManagement.Infrastructure.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("Documents");
+                    b.ToTable("Documents", (string)null);
                 });
 
             modelBuilder.Entity("GovTaskManagement.Domain.Entities.TaskEntity", b =>
@@ -169,7 +169,7 @@ namespace GovTaskManagement.Infrastructure.Migrations
 
                     b.HasIndex("creatorId");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("Tasks", (string)null);
                 });
 
             modelBuilder.Entity("GovTaskManagement.Domain.Entities.User", b =>
@@ -190,7 +190,7 @@ namespace GovTaskManagement.Infrastructure.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
