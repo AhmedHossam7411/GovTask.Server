@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GovTaskManagement.Application.Dtos;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
+using Azure.Core;
+using GovTaskManagement.Infrastructure.Repositories;
+using GovTaskManagement.Application.Interfaces.Repositories;
 
 namespace GovernmentTaskManagement.Api.Endpoints
 {
@@ -8,17 +11,15 @@ namespace GovernmentTaskManagement.Api.Endpoints
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService AuthService;
-
-        public AuthController(IAuthService _authService)
+        private readonly IAuthService _authService;
+        public AuthController(IAuthService authService)
         {
-            AuthService = _authService;
-
+            _authService = authService;
         }
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
-            var token = await AuthService.RegisterAsync(registerRequestDto);                   
+            var token = await _authService.RegisterAsync(registerRequestDto);                   
             if(token == null)
             {
                 return BadRequest("registration failed");
@@ -28,12 +29,33 @@ namespace GovernmentTaskManagement.Api.Endpoints
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequestDto loginRequest)
         {
-            var token = await AuthService.LoginAsync(loginRequest);
-            if(token == null)
-            {             
+            var result = await _authService.LoginAsync(loginRequest);
+            if(result == null)             
               return Unauthorized("login failed");
+
+            Response.Cookies.Append("refreshToken", result.RefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddDays(7)
+            });
+            return Ok(new { accessToken = result.AccessToken });
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+
+            if (!string.IsNullOrEmpty(refreshToken))
+            {
+                await _authService.LogoutAsync(refreshToken);
             }
-            return Ok(new {Token = token});
+
+            Response.Cookies.Delete("refreshToken");
+
+            return Ok();
         }
 
     }

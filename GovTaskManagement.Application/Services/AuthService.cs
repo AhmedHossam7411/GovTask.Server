@@ -3,6 +3,7 @@ using GovTaskManagement.Application.Interfaces.Repositories;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 using GovTaskManagement.Domain.Entities;
 using Microsoft.Extensions.Configuration;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GovTaskManagement.Application.Services
 {
@@ -15,24 +16,43 @@ namespace GovTaskManagement.Application.Services
             _unitOfWork = unitOfWork;
             _configuration = config;
         }
-        public async Task<string?> LoginAsync(LoginRequestDto loginDto)
+        public async Task<AuthResponseDto?> LoginAsync(LoginRequestDto loginDto)
         {
-            var userExists = await _unitOfWork.ApiUserRepository.SearchByEmailAsync(loginDto.email);
-            if (userExists is null)
+            var user = await _unitOfWork.ApiUserRepository
+                .SearchByEmailAsync(loginDto.email);
+
+            if (user is null)
                 return null;
 
-            var validPassword = await _unitOfWork.ApiUserRepository.CheckPasswordAsync(userExists, loginDto.password);
-            if (validPassword is false)
+            var validPassword = await _unitOfWork
+                .ApiUserRepository
+                .CheckPasswordAsync(user, loginDto.password);
+
+            if (!validPassword)
                 return null;
 
-            var token = JwtTokenGenerator.GenerateToken(userExists,
+            var accessToken = JwtTokenGenerator.GenerateToken(
+                user,
                 _configuration["Jwt:Key"],
                 _configuration["Jwt:Issuer"],
                 _configuration["Jwt:Audience"]
-                );
+            );
+            var refreshToken = Guid.NewGuid().ToString(); 
+            var refreshTokenEntity = new RefreshToken
+            {
+                Token = refreshToken,
+                UserId = user.Id,
+                ExpiresAt = DateTime.UtcNow.AddDays(7),
+                IsRevoked = false
+            };
+            await _unitOfWork.RefreshTokenRepository.AddAsync(refreshTokenEntity);
             await _unitOfWork.SaveChangesAsync();
-            return token;
-
+ 
+            return new AuthResponseDto
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken
+            };
         }
         public async Task<string?> RegisterAsync(RegisterRequestDto registerDto)
         {
@@ -64,6 +84,28 @@ namespace GovTaskManagement.Application.Services
             await _unitOfWork.SaveChangesAsync();
             return token;
 
+        }
+        public async Task LogoutAsync(string refreshToken)
+        {
+            if (string.IsNullOrEmpty(refreshToken))
+                return;
+
+            var tokenEntity = await _unitOfWork
+                .RefreshTokenRepository
+                .GetByTokenAsync(refreshToken);
+
+            if (tokenEntity == null)
+                return;
+
+            if (tokenEntity.IsRevoked)
+                return;
+
+            if (tokenEntity.ExpiresAt < DateTime.UtcNow)
+                return;
+
+            tokenEntity.IsRevoked = true;
+
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

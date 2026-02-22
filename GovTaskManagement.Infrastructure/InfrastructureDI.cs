@@ -26,6 +26,7 @@ namespace GovTaskManagement.Infrastructure
             Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             Services.AddScoped<IDocumentRepository, DocumentRepository>();
             Services.AddScoped<ITaskRepository, TaskRepository>();
+            Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

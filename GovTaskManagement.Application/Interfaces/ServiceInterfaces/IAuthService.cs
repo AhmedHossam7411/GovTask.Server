@@ -6,9 +6,10 @@ namespace GovTaskManagement.Application.Interfaces.ServiceInterfaces
     public interface IAuthService
     {
         
-        Task<string?> LoginAsync(LoginRequestDto loginDto);
+        Task<AuthResponseDto?> LoginAsync(LoginRequestDto loginDto);
         Task<string?> RegisterAsync(RegisterRequestDto registerDto);
-        
-        
+        Task LogoutAsync(string refreshToken);
+
+
     }
 }
