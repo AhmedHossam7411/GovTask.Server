@@ -9,7 +9,6 @@ namespace GovTaskManagement.Application.Interfaces.ServiceInterfaces
         Task<AuthResponseDto?> LoginAsync(LoginRequestDto loginDto);
         Task<string?> RegisterAsync(RegisterRequestDto registerDto);
         Task LogoutAsync(string refreshToken);
-
-
+        Task<AuthResponseDto?> RefreshTokenAsync(string refreshToken);
     }
 }

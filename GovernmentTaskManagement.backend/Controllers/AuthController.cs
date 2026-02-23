@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GovTaskManagement.Application.Dtos;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
-using Azure.Core;
-using GovTaskManagement.Infrastructure.Repositories;
-using GovTaskManagement.Application.Interfaces.Repositories;
 
 namespace GovernmentTaskManagement.Api.Endpoints
 {

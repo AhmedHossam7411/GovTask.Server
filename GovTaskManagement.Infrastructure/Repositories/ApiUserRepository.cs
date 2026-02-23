@@ -1,26 +1,16 @@
 ﻿using GovTaskManagement.Application.Interfaces.Repositories;
 using GovTaskManagement.Domain.Entities;
-using GovTaskManagement.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GovTaskManagement.Infrastructure.Repositories
 {
-    public class ApiUserRepository : GenericRepository<ApiUser> , IApiUserRepository
+    public class ApiUserRepository : IApiUserRepository
     {
         private readonly UserManager<ApiUser> _userManager;
-        private readonly ToolDbContext _context;
-        
-        public ApiUserRepository(UserManager<ApiUser> userManager , ToolDbContext context) : base(context)
+
+        public ApiUserRepository(UserManager<ApiUser> userManager)
         {
             _userManager = userManager;
-            _context = context;
-            
         }
 
         public async Task<bool> CheckPasswordAsync(ApiUser user, string password)
@@ -30,34 +20,24 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         public async Task<IdentityResult> CreateUserAsync(ApiUser user, string password )
         {
-            try
-            {
            return await _userManager.CreateAsync(user, password);
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-            
         }
 
-        public async Task<bool> DeleteUserAsync(ApiUser user)
+        public async Task<IdentityResult> DeleteUserAsync(ApiUser user)
         {
            
-            var deleted = await _userManager.DeleteAsync(user);
-            if (deleted.Succeeded)
-            { 
-                return true;
-            }
-            return false;
+            return await _userManager.DeleteAsync(user);
         }
 
-        public override async Task<bool> ExistsAsync(int id)
+        public async Task<bool> ExistsAsync(string id)
         {
-            var user = await GetAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
             return user != null;
+        }
+        public async Task<ApiUser?> FindByIdAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            return user;
         }
 
         //public async Task<bool> FindByRoleAsync(string role)
@@ -75,7 +55,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
         //    return await _userManager.FindByIdAsync(id.ToString());
         //}
 
-        public async Task<ApiUser> SearchByEmailAsync(string email)
+        public async Task<ApiUser?> SearchByEmailAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);
         }

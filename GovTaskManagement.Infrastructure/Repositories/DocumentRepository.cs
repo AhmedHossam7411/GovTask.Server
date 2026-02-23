@@ -2,9 +2,6 @@
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-
-
 
 namespace GovTaskManagement.Infrastructure.Repositories
 {

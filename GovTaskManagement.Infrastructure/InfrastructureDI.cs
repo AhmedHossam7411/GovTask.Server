@@ -1,18 +1,16 @@
 ﻿using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Application.Interfaces.Security;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 using GovTaskManagement.Application.Services;
-using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;
 using GovTaskManagement.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Authentication;
+using GovTaskManagement.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
 
 namespace GovTaskManagement.Infrastructure
 {
@@ -35,6 +33,8 @@ namespace GovTaskManagement.Infrastructure
             Services.AddScoped<IDepartmentService, DepartmentService>();
             Services.AddScoped<IDocumentService, DocumentService>();
 
+            Services.AddScoped<ITokenHasher, Sha256TokenHasher>();
+            Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
             Services.AddDbContext<ToolDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

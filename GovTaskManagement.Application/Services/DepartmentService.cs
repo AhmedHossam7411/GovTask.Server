@@ -1,7 +1,6 @@
 ﻿using GovTaskManagement.Application.Interfaces.Repositories;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 using GovTaskManagement.Domain.Entities;
-using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Services
 {
@@ -26,7 +25,7 @@ namespace GovTaskManagement.Application.Services
             await UnitOfWork.SaveChangesAsync();
             return updatedEntity;
         }
-        public async Task<bool> DeleteDepartment(int departmentId)
+        public async Task<bool> DeleteDepartment(string departmentId)
         {
 
             var result = await UnitOfWork.DepartmentRepository.DeleteAsync(departmentId);
@@ -53,7 +52,7 @@ namespace GovTaskManagement.Application.Services
             await UnitOfWork.SaveChangesAsync();
             return createdEntity;
         }
-        public async Task<DepartmentEntity> GetDepartmentById(int departmentId)
+        public async Task<DepartmentEntity> GetDepartmentById(string departmentId)
         {
             var dept = await UnitOfWork.DepartmentRepository.GetAsync(departmentId);
             return dept;
