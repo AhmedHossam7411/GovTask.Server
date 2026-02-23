@@ -4,7 +4,6 @@ using GovTaskManagement.Application.Interfaces.Security;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 using GovTaskManagement.Domain.Entities;
 using Microsoft.Extensions.Configuration;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GovTaskManagement.Application.Services
 {

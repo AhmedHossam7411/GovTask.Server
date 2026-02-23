@@ -55,5 +55,28 @@ namespace GovernmentTaskManagement.Api.Endpoints
             return Ok();
         }
 
+        [HttpPost("refresh")]
+        public async Task<IActionResult> refresh()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            var result = await _authService.RefreshTokenAsync(refreshToken);
+
+            if (result == null)
+            {
+                Response.Cookies.Delete("refreshToken");
+                return Unauthorized();
+            }
+
+            Response.Cookies.Append("refreshToken", result.RefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddDays(7)
+            });
+
+            return Ok(new { result.AccessToken });
+        }
+
     }
 }
