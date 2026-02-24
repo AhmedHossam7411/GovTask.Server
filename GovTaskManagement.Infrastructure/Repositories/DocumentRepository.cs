@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GovTaskManagement.Infrastructure.Repositories
 {
-    public class DocumentRepository :  GenericRepository<DocumentEntity> , IDocumentRepository
+    public class DocumentRepository :  GenericRepository<DocumentEntity,int> , IDocumentRepository
     {
         public DocumentRepository(ToolDbContext context) : base(context) 
         {

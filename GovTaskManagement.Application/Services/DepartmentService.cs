@@ -25,7 +25,7 @@ namespace GovTaskManagement.Application.Services
             await UnitOfWork.SaveChangesAsync();
             return updatedEntity;
         }
-        public async Task<bool> DeleteDepartment(string departmentId)
+        public async Task<bool> DeleteDepartment(int departmentId)
         {
 
             var result = await UnitOfWork.DepartmentRepository.DeleteAsync(departmentId);
@@ -52,7 +52,7 @@ namespace GovTaskManagement.Application.Services
             await UnitOfWork.SaveChangesAsync();
             return createdEntity;
         }
-        public async Task<DepartmentEntity> GetDepartmentById(string departmentId)
+        public async Task<DepartmentEntity> GetDepartmentById(int departmentId)
         {
             var dept = await UnitOfWork.DepartmentRepository.GetAsync(departmentId);
             return dept;

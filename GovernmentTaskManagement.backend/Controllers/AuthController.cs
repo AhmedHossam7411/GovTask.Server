@@ -64,7 +64,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
             if (result == null)
             {
                 Response.Cookies.Delete("refreshToken");
-                return Unauthorized();
+                return BadRequest("No refresh token cookie found");
             }
 
             Response.Cookies.Append("refreshToken", result.RefreshToken, new CookieOptions

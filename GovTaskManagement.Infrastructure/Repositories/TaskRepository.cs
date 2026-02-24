@@ -4,7 +4,7 @@ using GovTaskManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 namespace GovTaskManagement.Infrastructure.Repositories
 {
-    public class TaskRepository : GenericRepository<TaskEntity>, ITaskRepository
+    public class TaskRepository : GenericRepository<TaskEntity,int>, ITaskRepository
     {
         private readonly ToolDbContext context;
         

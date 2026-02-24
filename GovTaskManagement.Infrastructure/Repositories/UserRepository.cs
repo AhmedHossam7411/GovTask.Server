@@ -4,7 +4,7 @@ using GovTaskManagement.Infrastructure.Data;
 
 namespace GovTaskManagement.Infrastructure.Repositories
 {
-    public class UserRepository : GenericRepository<User>, IUserRepository
+    public class UserRepository : GenericRepository<User, int>, IUserRepository
     {
 
         public UserRepository(ToolDbContext context) : base(context)

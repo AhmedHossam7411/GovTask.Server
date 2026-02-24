@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GovTaskManagement.Infrastructure.Repositories
 {
-    public class DepartmentRepository : GenericRepository<DepartmentEntity>, IDepartmentRepository
+    public class DepartmentRepository : GenericRepository<DepartmentEntity, int>, IDepartmentRepository
 
     {
         private readonly ToolDbContext context;

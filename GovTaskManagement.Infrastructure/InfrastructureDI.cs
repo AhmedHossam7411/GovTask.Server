@@ -18,7 +18,7 @@ namespace GovTaskManagement.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection Services, IConfiguration Configuration)
         {
-            Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            Services.AddScoped(typeof(IGenericRepository<,>),typeof(GenericRepository<,>));
             Services.AddScoped<IUserRepository, UserRepository>();
             Services.AddScoped<IApiUserRepository, ApiUserRepository>();
             Services.AddScoped<IDepartmentRepository, DepartmentRepository>();

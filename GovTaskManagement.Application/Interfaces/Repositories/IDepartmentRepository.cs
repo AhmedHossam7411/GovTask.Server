@@ -2,7 +2,7 @@
 
 namespace GovTaskManagement.Application.Interfaces.Repositories
 {
-    public interface IDepartmentRepository : IGenericRepository<DepartmentEntity>
+    public interface IDepartmentRepository : IGenericRepository<DepartmentEntity, int>
     {
         Task<DepartmentEntity> GetDepartmentByTaskId(int taskId);
         
