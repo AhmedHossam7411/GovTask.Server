@@ -33,8 +33,8 @@ namespace GovernmentTaskManagement.Api.Endpoints
             Response.Cookies.Append("refreshToken", result.RefreshToken, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
+                Secure = false,
+                SameSite = SameSiteMode.Lax,
                 Expires = DateTime.UtcNow.AddDays(7)
             });
             return Ok(new { accessToken = result.AccessToken });
@@ -70,8 +70,8 @@ namespace GovernmentTaskManagement.Api.Endpoints
             Response.Cookies.Append("refreshToken", result.RefreshToken, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
+                Secure = false,
+                SameSite = SameSiteMode.Lax,
                 Expires = DateTime.UtcNow.AddDays(7)
             });
 

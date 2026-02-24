@@ -148,7 +148,7 @@ namespace GovTaskManagement.Application.Services
             return new AuthResponseDto
             {
                 AccessToken = newAccessToken,
-                RefreshToken = newRefreshToken // no rotation yet
+                RefreshToken = newRefreshToken 
             };
         }
     }

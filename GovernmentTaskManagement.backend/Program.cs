@@ -2,7 +2,6 @@ using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure;
 using GovTaskManagement.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,13 +23,13 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngular",
         policy => policy.WithOrigins("http://localhost:4200")
                         .AllowAnyHeader()
-                        .AllowAnyMethod());
+                        .AllowAnyMethod()
+                        .AllowCredentials());
 });
 
 var app = builder.Build();
 app.UseHttpsRedirection();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
