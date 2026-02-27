@@ -7,6 +7,7 @@ using GovTaskManagement.Infrastructure.Repositories;
 using GovTaskManagement.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -39,7 +40,7 @@ namespace GovTaskManagement.Infrastructure
             Services.AddDbContext<ToolDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            var jwtKey = Configuration["Jwt:Key"];
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
             var jwtIssuer = Configuration["Jwt:Issuer"];
             var jwtAud = Configuration["Jwt:Audience"];
 
@@ -47,21 +48,24 @@ namespace GovTaskManagement.Infrastructure
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-               
             })
             .AddJwtBearer(options =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtIssuer,
-                    ValidAudience = jwtAud,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-                };
-            });
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = Configuration["Jwt:Issuer"],
+
+                ValidateAudience = true,
+                ValidAudience = Configuration["Jwt:Audience"],
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = key,
+
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+        });
 
             return Services;
         }

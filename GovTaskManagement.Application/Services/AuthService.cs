@@ -39,7 +39,7 @@ namespace GovTaskManagement.Application.Services
                 return null;
 
             var accessToken = _jwtGenerator.GenerateToken(user);
-            var refreshToken = Guid.NewGuid().ToString(); 
+            var refreshToken = Guid.NewGuid().ToString();
             var refreshTokenEntity = new RefreshToken
             {
                 Token = refreshToken,
@@ -132,11 +132,9 @@ namespace GovTaskManagement.Application.Services
             tokenEntity.IsRevoked = true;
 
             var newRefreshToken = Guid.NewGuid().ToString();
-            var hashedToken = _tokenHasher.Hash(newRefreshToken);
-
             var newTokenEntity = new RefreshToken
             {
-                Token = hashedToken,
+                Token = newRefreshToken,
                 UserId = user.Id,
                 ExpiresAt = DateTime.UtcNow.AddDays(7),
                 IsRevoked = false

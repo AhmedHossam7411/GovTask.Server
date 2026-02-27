@@ -22,7 +22,7 @@ namespace GovTaskManagement.Infrastructure.Security
                 var secretKey = _configuration["Jwt:Key"];
                 var issuer = _configuration["Jwt:Issuer"];
                 var audience = _configuration["Jwt:Audience"];
-                var expiryMinutes = int.Parse(_configuration["Jwt:ExpiryMinutes"] ?? "1");
+                var expiryMinutes = int.Parse(_configuration["Jwt:expiry"]);
 
                 var securityKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(secretKey));

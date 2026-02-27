@@ -56,7 +56,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
         }
 
         [HttpPost("refresh")]
-        public async Task<IActionResult> refresh()
+        public async Task<IActionResult> Refresh()
         {
             var refreshToken = Request.Cookies["refreshToken"];
             var result = await _authService.RefreshTokenAsync(refreshToken);
