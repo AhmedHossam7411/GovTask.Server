@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Interfaces.Repositories
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IUserRepository : IGenericRepository<User, int>
     {
         Task<bool> FindByRoleAndDepartmentAsync(string role, int departmentId);
         Task<bool> FindByRoleAsync(string role);

@@ -2,14 +2,14 @@
 
 namespace GovTaskManagement.Application.Interfaces.Repositories
 {
-    public interface IGenericRepository<T> where T : class
+    public interface IGenericRepository<T, TKey> where T : class
     {
         Task<T> CreateAsync(T entity);
-        Task<T> GetAsync(int id );
+        Task<T> GetAsync(TKey id );
         Task<IEnumerable<T>> GetAllAsync();
         Task <T> UpdateAsync (T entity);  
-        Task <bool> DeleteAsync (int id); 
-        Task<bool> ExistsAsync (int id);
+        Task <bool> DeleteAsync (TKey id); 
+        Task<bool> ExistsAsync (TKey id);
     }
    
 }

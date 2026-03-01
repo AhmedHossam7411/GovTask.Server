@@ -1,17 +1,13 @@
 ﻿using GovTaskManagement.Application.Dtos;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
-using GovTaskManagement.Domain.Entities;
-using GovTaskManagement.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace GovernmentTaskManagement.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User")]
+    [Authorize]
     public class DocumentController : ControllerBase
     {
         private readonly IDocumentService _documentService;

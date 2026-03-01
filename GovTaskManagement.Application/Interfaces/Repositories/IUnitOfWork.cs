@@ -13,7 +13,7 @@ namespace GovTaskManagement.Application.Interfaces.Repositories
         public IDepartmentRepository DepartmentRepository { get; }
         public IApiUserRepository ApiUserRepository { get; }
         public IUserRepository UserRepository { get; }
-
+        public IRefreshTokenRepository RefreshTokenRepository { get; }
         Task<int> SaveChangesAsync();  // Method to save changes asynchronously
     }
 }

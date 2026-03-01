@@ -1,7 +1,6 @@
 ﻿using GovTaskManagement.Application.Interfaces.Repositories;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 using GovTaskManagement.Domain.Entities;
-using System.Threading.Tasks;
 
 namespace GovTaskManagement.Application.Services
 {

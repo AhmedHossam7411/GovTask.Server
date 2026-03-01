@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-
 namespace GovernmentTaskManagement.Api.Endpoints
 {
     [Route("api/[controller]")]

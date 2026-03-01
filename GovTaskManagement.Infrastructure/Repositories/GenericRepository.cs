@@ -1,16 +1,10 @@
 ﻿using GovTaskManagement.Application.Interfaces.Repositories;
-using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GovTaskManagement.Infrastructure.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T, TKey> : IGenericRepository<T, TKey> where T : class
 
     {
         protected readonly ToolDbContext _context;
@@ -28,7 +22,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(TKey id)
         {
             var entity = await GetAsync(id);
             if (entity != null)
@@ -39,7 +33,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
             }
             return false;
         }
-        public virtual async Task<bool> ExistsAsync(int id)
+        public virtual async Task<bool> ExistsAsync(TKey id)
         {
             var exists = await _context.Set<T>().FindAsync(id) != null;
             
@@ -53,7 +47,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
             return getAll;
         }
 
-        public virtual async Task<T> GetAsync(int id)
+        public virtual async Task<T> GetAsync(TKey id)
         {
             var get = await _context.Set<T>().FindAsync(id);
             
