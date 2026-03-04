@@ -18,6 +18,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
 
         public IApiUserRepository ApiUserRepository {  get; }
         public IRefreshTokenRepository RefreshTokenRepository { get; }
+        public IBehaviorRepository BehaviorRepository { get; }
 
         public UnitOfWork(
            ToolDbContext context,
@@ -26,7 +27,8 @@ namespace GovTaskManagement.Infrastructure.Repositories
            IDepartmentRepository departmentRepository,
            IUserRepository userRepository,
            IApiUserRepository apiUserRepository,
-           IRefreshTokenRepository refreshTokenRepository
+           IRefreshTokenRepository refreshTokenRepository,
+           IBehaviorRepository behaviorRepository
             )
         {
             _context = context;
@@ -36,6 +38,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
             UserRepository = userRepository;
             ApiUserRepository = apiUserRepository;
             RefreshTokenRepository = refreshTokenRepository;
+            BehaviorRepository = behaviorRepository;
         }
 
         public void Dispose()

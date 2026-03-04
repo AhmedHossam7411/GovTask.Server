@@ -30,7 +30,7 @@ namespace GovTaskManagement.Application.Mappers
                 Name = entity.Name,
                 Description = entity.Description,
                 UploadDate = entity.UploadDate,
-                
+                TaskId = entity.TaskId
             };
         }
         public static IEnumerable<DocumentDto> ToDto(this IEnumerable<DocumentEntity> entities)
