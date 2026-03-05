@@ -46,16 +46,8 @@ namespace GovTaskManagement.Application.Services
             };
 
             await _unitOfWork.BehaviorRepository.CreateAsync(entity);
-            try
-            {
-
             await _unitOfWork.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-                var ee = e.InnerException;
-                throw;
-            }
+            
         }
     }
 }
