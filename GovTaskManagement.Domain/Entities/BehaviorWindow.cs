@@ -3,6 +3,8 @@
     public class BehaviorWindow
     {
             public int Id { get; set; }
+            public string SessionId { get; set; } = string.Empty;
+            public string CurrentPage { get; set; } = string.Empty;
             public string UserId { get; set; } = string.Empty;
             public DateTime Timestamp { get; set; }
 

@@ -4,7 +4,8 @@
     {
         public string Context { get; set; } = string.Empty;
         public DateTime Timestamp { get; set; }
-
+        public string SessionId { get; set; } = string.Empty;
+        public string CurrentPage { get; set; } = string.Empty;
         // Mouse
         public double AvgMouseSpeed { get; set; }
         public double StdMouseSpeed { get; set; }

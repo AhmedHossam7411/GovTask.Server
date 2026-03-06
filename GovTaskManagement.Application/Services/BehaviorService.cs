@@ -20,6 +20,8 @@ namespace GovTaskManagement.Application.Services
             {
                 UserId = userId,
                 Context = dto.Context,
+                CurrentPage = dto.CurrentPage,
+                SessionId = dto.SessionId,
                 Timestamp = dto.Timestamp,
 
                 AvgMouseSpeed = dto.AvgMouseSpeed,
@@ -46,7 +48,14 @@ namespace GovTaskManagement.Application.Services
             };
 
             await _unitOfWork.BehaviorRepository.CreateAsync(entity);
+            try
+            {
             await _unitOfWork.SaveChangesAsync();
+
+            }catch (Exception e)
+            {
+                e = e.InnerException;
+            }
             
         }
     }
