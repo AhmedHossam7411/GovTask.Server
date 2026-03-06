@@ -16,6 +16,7 @@ namespace GovTaskManagement.Infrastructure.Data
         public DbSet<TaskEntity> Tasks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<BehaviorWindow> BehaviorWindows { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

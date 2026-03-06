@@ -75,7 +75,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
                 Expires = DateTime.UtcNow.AddDays(7)
             });
 
-            return Ok(new { result.AccessToken });
+            return Ok(new { accessToken = result.AccessToken });
         }
 
     }

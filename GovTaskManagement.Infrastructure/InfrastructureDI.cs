@@ -26,6 +26,7 @@ namespace GovTaskManagement.Infrastructure
             Services.AddScoped<IDocumentRepository, DocumentRepository>();
             Services.AddScoped<ITaskRepository, TaskRepository>();
             Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            Services.AddScoped<IBehaviorRepository, BehaviorRepository>();
 
             Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -33,6 +34,7 @@ namespace GovTaskManagement.Infrastructure
             Services.AddScoped<ITaskService, TaskService>();
             Services.AddScoped<IDepartmentService, DepartmentService>();
             Services.AddScoped<IDocumentService, DocumentService>();
+            Services.AddScoped<IBehaviorService, BehaviorService>();
 
             Services.AddScoped<ITokenHasher, Sha256TokenHasher>();
             Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();

@@ -7,12 +7,9 @@ namespace GovTaskManagement.Infrastructure.Repositories
     public class TaskRepository : GenericRepository<TaskEntity,int>, ITaskRepository
     {
         private readonly ToolDbContext context;
-        
-
         public TaskRepository(ToolDbContext _context) : base(_context)
         {
             context = _context;
-            
         }
 
         public async Task<IEnumerable<TaskEntity>?> GetTasksByDepartmentId(int departmentId)

@@ -4,6 +4,7 @@ using GovTaskManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GovTaskManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ToolDbContext))]
-    partial class toolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260301204759_BehaviouralDataEntity")]
+    partial class BehaviouralDataEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,19 +127,11 @@ namespace GovTaskManagement.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CurrentPage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("KeyEventCount")
                         .HasColumnType("int");
 
                     b.Property<int>("MouseMoveCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("SessionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("StdClickDuration")
                         .HasColumnType("float");
