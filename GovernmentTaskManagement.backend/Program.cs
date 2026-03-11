@@ -52,18 +52,12 @@ new OpenApiSecurityScheme
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular",
-        policy => policy.WithOrigins("http://localhost:4200")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials());
-});
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowVercel",
+    options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("https://gov-task-client.vercel.app")
+            policy.WithOrigins(
+                    "http://localhost:4200",
+                    "https://gov-task-client.vercel.app")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
@@ -79,8 +73,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowAngular");
-app.UseCors("AllowVercel");
+app.UseCors("AllowFrontend");
 app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
