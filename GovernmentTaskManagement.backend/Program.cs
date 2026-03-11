@@ -58,6 +58,17 @@ builder.Services.AddCors(options =>
                         .AllowAnyMethod()
                         .AllowCredentials());
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowVercel",
+        policy =>
+        {
+            policy.WithOrigins("https://gov-task-client.vercel.app")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+});
 
 var app = builder.Build();
 app.UseHttpsRedirection();
@@ -69,6 +80,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAngular");
+app.UseCors("AllowVercel");
 app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
