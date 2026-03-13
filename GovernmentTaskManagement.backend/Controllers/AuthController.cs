@@ -33,8 +33,8 @@ namespace GovernmentTaskManagement.Api.Endpoints
             Response.Cookies.Append("refreshToken", result.RefreshToken, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Lax,
+                Secure = true,
+                SameSite = SameSiteMode.None,
                 Expires = DateTime.UtcNow.AddDays(7)
             });
             return Ok(new { accessToken = result.AccessToken });
@@ -57,7 +57,7 @@ namespace GovernmentTaskManagement.Api.Endpoints
 
         [HttpPost("refresh")]
         public async Task<IActionResult> Refresh()
-        {
+            {
             var refreshToken = Request.Cookies["refreshToken"];
             var result = await _authService.RefreshTokenAsync(refreshToken);
 
@@ -70,8 +70,9 @@ namespace GovernmentTaskManagement.Api.Endpoints
             Response.Cookies.Append("refreshToken", result.RefreshToken, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Lax,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Path = "/",
                 Expires = DateTime.UtcNow.AddDays(7)
             });
 

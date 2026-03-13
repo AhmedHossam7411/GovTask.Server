@@ -73,7 +73,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowAngular");
+app.UseCors("AllowFrontend");
 app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();

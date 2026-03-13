@@ -61,7 +61,7 @@ namespace GovernmentTaskManagement.Api.Controllers
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDepartment([FromRoute] int id, DepartmentDto dto)
-        {
+         {
             if (id != dto.Id)
             {
                 return BadRequest();
