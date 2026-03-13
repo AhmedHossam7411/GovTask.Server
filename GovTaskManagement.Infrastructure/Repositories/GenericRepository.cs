@@ -57,7 +57,6 @@ namespace GovTaskManagement.Infrastructure.Repositories
         public virtual async Task<T> UpdateAsync(T entity)
         {
             var updated = _context.Set<T>().Update(entity);
-            
             return updated.Entity;
         }
     }

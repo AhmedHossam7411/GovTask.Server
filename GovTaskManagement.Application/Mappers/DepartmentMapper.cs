@@ -3,7 +3,7 @@ using GovTaskManagement.Domain.Entities;
 
 namespace GovTaskManagement.Application.Mappers
 {
-    public static class DepartmentWrapper
+    public static class DepartmentMapper
     {
         public static DepartmentDto ToDto(this DepartmentEntity department)
         {
@@ -17,6 +17,7 @@ namespace GovTaskManagement.Application.Mappers
         {
             return new DepartmentEntity
             {
+                Id = entity.Id,
                 Name = entity.Name,
             };
         }
