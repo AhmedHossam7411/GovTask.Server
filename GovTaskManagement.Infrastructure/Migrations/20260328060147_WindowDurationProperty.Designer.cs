@@ -4,6 +4,7 @@ using GovTaskManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GovTaskManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ToolDbContext))]
-    partial class toolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260328060147_WindowDurationProperty")]
+    partial class WindowDurationProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,7 +178,11 @@ namespace GovTaskManagement.Infrastructure.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("WindowDuration")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

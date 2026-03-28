@@ -88,7 +88,13 @@ namespace GovTaskManagement.Application.Services
         {
             var entity = dto.ToEntity();
             var updatedEntity = await UnitOfWork.TasksRepository.UpdateAsync(entity);
+            try { 
+            
             await UnitOfWork.SaveChangesAsync();
+            }catch(Exception e)
+            {
+                
+            }
             return updatedEntity.ToDto();
         }
 

@@ -18,9 +18,8 @@ namespace GovernmentTaskManagement.Api.Controllers
         public async Task<IActionResult> SaveWindow(BehaviorWindowDto dto)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (userId == null) 
-                return Unauthorized();
-            
+             
+             
             await _behaviorService.SaveWindowAsync(dto, userId!);
             return Ok();
         }

@@ -7,11 +7,9 @@ namespace GovTaskManagement.Application.Services
 {
     public class BehaviorService : IBehaviorService   
     {
-        private readonly IBehaviorRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
-        public BehaviorService(IBehaviorRepository repository, IUnitOfWork unitOfWork)
+        public BehaviorService(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
             _unitOfWork = unitOfWork;
         }
         public async Task SaveWindowAsync(BehaviorWindowDto dto, string userId)
@@ -44,18 +42,22 @@ namespace GovTaskManagement.Application.Services
                 StdFlight = dto.StdFlight,
                 KeyEventCount = dto.KeyEventCount,
 
-                TypingRate = dto.TypingRate
-            };
+                TypingRate = dto.TypingRate,
+                ClickRate = dto.ClickRate,
+                MouseMoveRate = dto.MouseMoveRate,
+                AvgPreClickSpeed = dto.AvgPreClickSpeed,
+                StdPreClickSpeed = dto.StdPreClickSpeed,
+                };
 
-            await _unitOfWork.BehaviorRepository.CreateAsync(entity);
-            try
-            {
-            await _unitOfWork.SaveChangesAsync();
+                    await _unitOfWork.BehaviorRepository.CreateAsync(entity);
+                try
+                {
+                    await _unitOfWork.SaveChangesAsync();
 
-            }catch (Exception e)
-            {
-                e = e.InnerException;
-            }
+                }catch (Exception e)
+                {
+                    e = e.InnerException;
+                }
             
         }
     }

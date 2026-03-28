@@ -19,7 +19,8 @@ namespace GovTaskManagement.Application.Mappers
                 Description = entity.Description,
                 DueDate = entity.DueDate,
                 Documents = entity.Documents?.Select(d => d.ToDto()).ToList(),
-                DepartmentId = entity.DepartmentId
+                DepartmentId = entity.DepartmentId,
+                creatorId = entity.creatorId
             };
         }
 
@@ -36,7 +37,8 @@ namespace GovTaskManagement.Application.Mappers
                 Description = dto.Description,
                 DueDate = dto.DueDate,
                 Documents = dto.Documents?.Select(d => d.ToEntity()).ToList(),
-                DepartmentId = dto.DepartmentId
+                DepartmentId = dto.DepartmentId,
+                creatorId = dto.creatorId
             };
         }
     }

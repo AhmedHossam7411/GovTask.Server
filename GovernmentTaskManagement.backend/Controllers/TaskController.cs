@@ -72,12 +72,9 @@ namespace GovernmentTaskManagement.Api.Endpoints
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTask(string name, TaskDto dto)
+        public async Task<IActionResult> PutTask(TaskDto dto)
         {
-            if (name != dto.Name)
-            {
-                return BadRequest();
-            }
+            
             if (dto.DepartmentId <= 0)
                 return BadRequest("DepartmentId is required and must be valid.");
 

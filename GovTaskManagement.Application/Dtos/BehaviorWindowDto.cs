@@ -10,11 +10,15 @@
         public double AvgMouseSpeed { get; set; }
         public double StdMouseSpeed { get; set; }
         public int MouseMoveCount { get; set; }
+        public double? MouseMoveRate { get; set; }
 
         public double AvgMouseIdle { get; set; }
         public double StdMouseIdle { get; set; }
 
         // Clicks
+        public double? StdPreClickSpeed { get; set; }
+        public double? AvgPreClickSpeed { get; set; }
+        public double? ClickRate { get; set; }
         public double AvgClickDuration { get; set; }
         public double StdClickDuration { get; set; }
         public int ClickCount { get; set; }

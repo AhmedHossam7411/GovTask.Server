@@ -5,7 +5,7 @@
             public int Id { get; set; }
             public string SessionId { get; set; } = string.Empty;
             public string CurrentPage { get; set; } = string.Empty;
-            public string UserId { get; set; } = string.Empty;
+            public string? UserId { get; set; } = string.Empty;
             public DateTime Timestamp { get; set; }
 
             public double AvgMouseSpeed { get; set; }
@@ -30,6 +30,11 @@
 
             public double TypingRate { get; set; }
             public string Context { get; set; } = string.Empty;
+
+            public double? ClickRate { get; set; }
+            public double? MouseMoveRate { get; set; }
+            public double? AvgPreClickSpeed { get; set; }
+            public double? StdPreClickSpeed { get; set; }
     }
 }
 
