@@ -7,7 +7,6 @@ using GovTaskManagement.Infrastructure.Repositories;
 using GovTaskManagement.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -35,6 +34,7 @@ namespace GovTaskManagement.Infrastructure
             Services.AddScoped<IDepartmentService, DepartmentService>();
             Services.AddScoped<IDocumentService, DocumentService>();
             Services.AddScoped<IBehaviorService, BehaviorService>();
+            Services.AddHttpClient<IMLService, MLService>();
 
             Services.AddScoped<ITokenHasher, Sha256TokenHasher>();
             Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();

@@ -1,7 +1,6 @@
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure;
 using GovTaskManagement.Infrastructure.Data;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
