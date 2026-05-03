@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +15,7 @@ namespace GovTaskManagement.Application.Interfaces.Repositories
         public IUserRepository UserRepository { get; }
         public IRefreshTokenRepository RefreshTokenRepository { get; }
         public IBehaviorRepository BehaviorRepository { get; }
+        public ISecurityAlertRepository SecurityAlertRepository { get; }
         Task<int> SaveChangesAsync();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace GovTaskManagement.Domain.Entities
+namespace GovTaskManagement.Domain.Entities
 {
     public class BehaviorWindow
     {
@@ -35,6 +35,25 @@
             public double? MouseMoveRate { get; set; }
             public double? AvgPreClickSpeed { get; set; }
             public double? StdPreClickSpeed { get; set; }
+
+            // Forensic Fingerprinting
+            public string? UserAgent { get; set; }
+            public string? Language { get; set; }
+            public string? ScreenResolution { get; set; }
+            public string? TimeZone { get; set; }
+            public string? Platform { get; set; }
+            public int? HardwareConcurrency { get; set; }
+            
+            // Scroll Dynamics
+            public double? AvgScrollSpeed { get; set; }
+            public int? ScrollEventCount { get; set; }
+            
+            // Geolocation (Estimated by IP usually)
+            public string? Location { get; set; }
+
+            // Attack string detection
+            public bool HackingStringDetected { get; set; } = false;
+            public string? DetectedPatterns { get; set; }
     }
 }
 

@@ -1,10 +1,11 @@
-﻿using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Application.Interfaces.Repositories;
 using GovTaskManagement.Application.Interfaces.Security;
 using GovTaskManagement.Application.Interfaces.ServiceInterfaces;
 using GovTaskManagement.Application.Services;
 using GovTaskManagement.Infrastructure.Data;
 using GovTaskManagement.Infrastructure.Repositories;
 using GovTaskManagement.Infrastructure.Security;
+using GovTaskManagement.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,7 @@ namespace GovTaskManagement.Infrastructure
             Services.AddScoped<ITaskRepository, TaskRepository>();
             Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             Services.AddScoped<IBehaviorRepository, BehaviorRepository>();
+            Services.AddScoped<ISecurityAlertRepository, SecurityAlertRepository>();
 
             Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -34,6 +36,8 @@ namespace GovTaskManagement.Infrastructure
             Services.AddScoped<IDepartmentService, DepartmentService>();
             Services.AddScoped<IDocumentService, DocumentService>();
             Services.AddScoped<IBehaviorService, BehaviorService>();
+            Services.AddScoped<ISecurityService, SecurityService>();
+            Services.AddScoped<IEmailService, EmailService>();
             Services.AddHttpClient<IMLService, MLService>();
 
             Services.AddScoped<ITokenHasher, Sha256TokenHasher>();
