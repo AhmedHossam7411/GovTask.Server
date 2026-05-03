@@ -1,4 +1,4 @@
-﻿using GovTaskManagement.Application.Interfaces.Repositories;
+using GovTaskManagement.Application.Interfaces.Repositories;
 using GovTaskManagement.Domain.Entities;
 using GovTaskManagement.Infrastructure.Data;
 
@@ -19,6 +19,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
         public IApiUserRepository ApiUserRepository {  get; }
         public IRefreshTokenRepository RefreshTokenRepository { get; }
         public IBehaviorRepository BehaviorRepository { get; }
+        public ISecurityAlertRepository SecurityAlertRepository { get; }
 
         public UnitOfWork(
            ToolDbContext context,
@@ -28,7 +29,8 @@ namespace GovTaskManagement.Infrastructure.Repositories
            IUserRepository userRepository,
            IApiUserRepository apiUserRepository,
            IRefreshTokenRepository refreshTokenRepository,
-           IBehaviorRepository behaviorRepository
+           IBehaviorRepository behaviorRepository,
+           ISecurityAlertRepository securityAlertRepository
             )
         {
             _context = context;
@@ -39,6 +41,7 @@ namespace GovTaskManagement.Infrastructure.Repositories
             ApiUserRepository = apiUserRepository;
             RefreshTokenRepository = refreshTokenRepository;
             BehaviorRepository = behaviorRepository;
+            SecurityAlertRepository = securityAlertRepository;
         }
 
         public void Dispose()

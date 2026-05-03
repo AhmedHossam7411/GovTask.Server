@@ -47,6 +47,8 @@ namespace GovTaskManagement.Application.Services
                 MouseMoveRate = dto.MouseMoveRate,
                 AvgPreClickSpeed = dto.AvgPreClickSpeed,
                 StdPreClickSpeed = dto.StdPreClickSpeed,
+                HackingStringDetected = dto.HackingStringDetected,
+                DetectedPatterns = dto.DetectedPatterns,
                 };
 
                     await _unitOfWork.BehaviorRepository.CreateAsync(entity);

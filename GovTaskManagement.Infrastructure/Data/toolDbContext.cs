@@ -1,4 +1,4 @@
-﻿using GovTaskManagement.Domain.Entities;
+using GovTaskManagement.Domain.Entities;
 using Humanizer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -17,6 +17,7 @@ namespace GovTaskManagement.Infrastructure.Data
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<BehaviorWindow> BehaviorWindows { get; set; }
+        public DbSet<SecurityAlert> SecurityAlerts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

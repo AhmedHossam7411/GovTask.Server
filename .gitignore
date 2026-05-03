@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+GovernmentTaskManagement.backend/appsettings.json
+GovernmentTaskManagement.backend/appsettings.*.json
