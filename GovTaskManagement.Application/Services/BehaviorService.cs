@@ -49,6 +49,12 @@ namespace GovTaskManagement.Application.Services
                 StdPreClickSpeed = dto.StdPreClickSpeed,
                 HackingStringDetected = dto.HackingStringDetected,
                 DetectedPatterns = dto.DetectedPatterns,
+                PasteCount = dto.PasteCount,
+                SuspiciousPasteDetected = dto.SuspiciousPasteDetected,
+                DevToolsShortcutCount = dto.DevToolsShortcutCount,
+                AbnormalInputDetected = dto.AbnormalInputDetected,
+                DevToolsDetected = dto.DevToolsDetected,
+                UnauthorizedAttempts = dto.UnauthorizedAttempts,
                 };
 
                     await _unitOfWork.BehaviorRepository.CreateAsync(entity);

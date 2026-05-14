@@ -43,7 +43,13 @@ namespace GovTaskManagement.Application.Services
                 HardwareConcurrency = dto.Snapshot.HardwareConcurrency,
                 Location = dto.Snapshot.Location,
                 HackingStringDetected = dto.Snapshot.HackingStringDetected,
-                DetectedPatterns = dto.Snapshot.DetectedPatterns
+                DetectedPatterns = dto.Snapshot.DetectedPatterns,
+                PasteCount = dto.Snapshot.PasteCount,
+                SuspiciousPasteDetected = dto.Snapshot.SuspiciousPasteDetected,
+                DevToolsShortcutCount = dto.Snapshot.DevToolsShortcutCount,
+                AbnormalInputDetected = dto.Snapshot.AbnormalInputDetected,
+                DevToolsDetected = dto.Snapshot.DevToolsDetected,
+                UnauthorizedAttempts = dto.Snapshot.UnauthorizedAttempts
             };
 
             await _unitOfWork.BehaviorRepository.CreateAsync(snapshot);
