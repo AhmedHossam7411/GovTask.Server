@@ -13,16 +13,21 @@ namespace GovTaskManagement.Application.Services
         private readonly IConfiguration _configuration;
         private readonly ITokenHasher _tokenHasher;
         private readonly IJwtTokenGenerator _jwtGenerator;
+        private readonly ISuspensionService _suspensionService;
+
         public AuthService(IConfiguration config, IUnitOfWork unitOfWork,
             IApiUserRepository _apiUserRepository,
             ITokenHasher tokenHasher,
-            IJwtTokenGenerator jwtGenerator)
+            IJwtTokenGenerator jwtGenerator,
+            ISuspensionService suspensionService)
         {
             _unitOfWork = unitOfWork;
             _configuration = config;
             _tokenHasher = tokenHasher;
             _jwtGenerator = jwtGenerator;
+            _suspensionService = suspensionService;
         }
+
         public async Task<AuthResponseDto?> LoginAsync(LoginRequestDto loginDto)
         {
             var user = await _unitOfWork.ApiUserRepository
@@ -30,6 +35,10 @@ namespace GovTaskManagement.Application.Services
 
             if (user is null)
                 return null;
+
+            // Check suspension before password so the user can't probe for a valid account
+            if (_suspensionService.IsSuspended(user.Id, out var remaining))
+                return new AuthResponseDto { SuspendedUntil = DateTime.UtcNow.Add(remaining) };
 
             var validPassword = await _unitOfWork
                 .ApiUserRepository

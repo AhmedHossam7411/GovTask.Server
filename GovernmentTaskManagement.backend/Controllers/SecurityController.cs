@@ -15,12 +15,27 @@ namespace GovernmentTaskManagement.backend.Controllers
         private readonly ISecurityService _securityService;
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
+        private readonly ISuspensionService _suspensionService;
 
-        public SecurityController(ISecurityService securityService, IEmailService emailService, IConfiguration configuration)
+        public SecurityController(ISecurityService securityService, IEmailService emailService,
+            IConfiguration configuration, ISuspensionService suspensionService)
         {
             _securityService = securityService;
             _emailService = emailService;
             _configuration = configuration;
+            _suspensionService = suspensionService;
+        }
+
+        [Authorize]
+        [HttpPost("suspend-user")]
+        public IActionResult SuspendUser()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            _suspensionService.SuspendUser(userId);
+            return Ok();
         }
 
         [HttpPost("alert-admin")]
