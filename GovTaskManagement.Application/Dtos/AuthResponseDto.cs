@@ -11,6 +11,7 @@ namespace GovTaskManagement.Application.Dtos
     {
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
-        
+        // Non-null means the account is suspended — no tokens are issued
+        public DateTime? SuspendedUntil { get; set; }
     }
 }

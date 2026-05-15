@@ -54,6 +54,14 @@ namespace GovTaskManagement.Domain.Entities
             // Attack string detection
             public bool HackingStringDetected { get; set; } = false;
             public string? DetectedPatterns { get; set; }
+
+            // Extended attack signals
+            public int PasteCount { get; set; } = 0;
+            public bool SuspiciousPasteDetected { get; set; } = false;
+            public int DevToolsShortcutCount { get; set; } = 0;
+            public bool AbnormalInputDetected { get; set; } = false;
+            public bool DevToolsDetected { get; set; } = false;
+            public int UnauthorizedAttempts { get; set; } = 0;
     }
 }
 

@@ -11,8 +11,8 @@ namespace GovernmentTaskManagement.Api.Controllers
         [HttpPost("predict")]
         public async Task<IActionResult> Predict(MlPredictionRequestDto dto)
         {
-            await _mLService.PredictAsync(dto);
-            return Ok(dto);
+            var result = await _mLService.PredictAsync(dto);
+            return Ok(result);
         }
     }
 }

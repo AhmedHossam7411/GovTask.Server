@@ -27,8 +27,15 @@ namespace GovernmentTaskManagement.Api.Endpoints
         public async Task<IActionResult> Login(LoginRequestDto loginRequest)
         {
             var result = await _authService.LoginAsync(loginRequest);
-            if(result == null)             
-              return Unauthorized("login failed");
+            if (result == null)
+                return Unauthorized("login failed");
+
+            if (result.SuspendedUntil.HasValue)
+            {
+                var minutesRemaining = (int)Math.Ceiling(
+                    (result.SuspendedUntil.Value - DateTime.UtcNow).TotalMinutes);
+                return StatusCode(423, new { error = "ACCOUNT_SUSPENDED", minutesRemaining });
+            }
 
             Response.Cookies.Append("refreshToken", result.RefreshToken, new CookieOptions
             {
