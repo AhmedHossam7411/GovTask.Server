@@ -36,7 +36,6 @@ namespace GovTaskManagement.Application.Services
             if (user is null)
                 return null;
 
-            // Check suspension before password so the user can't probe for a valid account
             if (_suspensionService.IsSuspended(user.Id, out var remaining))
                 return new AuthResponseDto { SuspendedUntil = DateTime.UtcNow.Add(remaining) };
 

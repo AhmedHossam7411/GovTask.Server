@@ -74,7 +74,6 @@ namespace GovTaskManagement.Application.Services
             await _unitOfWork.SecurityAlertRepository.CreateAsync(alert);
             await _unitOfWork.SaveChangesAsync();
 
-            // Send Email to Admin — wrapped so a failed email never blocks the 200 response
             try
             {
                 var adminEmail = _configuration["EmailSettings:AdminEmail"];
@@ -102,8 +101,7 @@ namespace GovTaskManagement.Application.Services
             }
             catch (Exception ex)
             {
-                // Email failure must not surface as 500 — alert is already saved to DB
-                Console.WriteLine($"[SecurityService] Email notification failed: {ex.Message}");
+                Console.WriteLine($"Email notification failed: {ex.Message}");
             }
         }
 

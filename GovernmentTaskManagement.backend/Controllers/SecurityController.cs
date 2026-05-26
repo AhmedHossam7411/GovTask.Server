@@ -41,7 +41,6 @@ namespace GovernmentTaskManagement.backend.Controllers
         [HttpPost("alert-admin")]
         public async Task<IActionResult> CreateAlert([FromBody] SecurityAlertDto dto)
         {
-            // Enrich with server-verified identity when the user is authenticated
             if (User.Identity?.IsAuthenticated == true)
             {
                 dto.UserId ??= User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
