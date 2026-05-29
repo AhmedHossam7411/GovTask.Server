@@ -5,7 +5,7 @@ namespace GovTaskManagement.Application.Interfaces.ServiceInterfaces
 {
     public interface IMLService
     {
-        Task<MlPredictionResponseDto> PredictAsync(object data);
+        Task<MlPredictionResponseDto> PredictAsync(MlPredictionRequestDto dto);
     }
 }
 

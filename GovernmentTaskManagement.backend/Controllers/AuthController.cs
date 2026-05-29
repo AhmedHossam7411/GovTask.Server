@@ -13,6 +13,14 @@ namespace GovernmentTaskManagement.Api.Endpoints
         {
             _authService = authService;
         }
+        [HttpPost("seed-admin")]
+        public async Task<IActionResult> SeedAdmin([FromBody] RegisterRequestDto dto)
+        {
+            var token = await _authService.RegisterAdminAsync(dto);
+            if (token == null) return BadRequest("Admin registration failed or admin already exists.");
+            return Ok(new { Token = token });
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
@@ -29,6 +37,9 @@ namespace GovernmentTaskManagement.Api.Endpoints
             var result = await _authService.LoginAsync(loginRequest);
             if (result == null)
                 return Unauthorized("login failed");
+
+            if (result.IsAdminRevoked)
+                return StatusCode(423, new { error = "ACCOUNT_REVOKED" });
 
             if (result.SuspendedUntil.HasValue)
             {

@@ -12,14 +12,9 @@ public class MLService : IMLService
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
     }
 
-    public async Task<MlPredictionResponseDto> PredictAsync(object data)
+    public async Task<MlPredictionResponseDto> PredictAsync(MlPredictionRequestDto dto)
     {
-        var request = new
-        {
-            data = new[] { data }
-        };
-
-        var json = JsonSerializer.Serialize(request);
+        var json = JsonSerializer.Serialize(dto, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         var response = await _httpClient.PostAsync("http://localhost:8000/predict", content);

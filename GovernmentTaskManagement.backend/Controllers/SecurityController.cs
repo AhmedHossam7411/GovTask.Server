@@ -26,6 +26,16 @@ namespace GovernmentTaskManagement.backend.Controllers
             _suspensionService = suspensionService;
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost("revoke-user")]
+        public IActionResult RevokeUser([FromBody] string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+                return BadRequest();
+            _suspensionService.RevokeUser(userId);
+            return Ok();
+        }
+
         [Authorize]
         [HttpPost("suspend-user")]
         public IActionResult SuspendUser()
@@ -66,6 +76,33 @@ namespace GovernmentTaskManagement.backend.Controllers
                 new { AdminEmail = adminEmail, Timestamp = DateTime.UtcNow.ToString("R") });
 
             return Ok(new { message = $"Test email sent to {adminEmail}" });
+        }
+
+        [Authorize]
+        [HttpGet("challenge-questions")]
+        public IActionResult GetChallengeQuestions()
+        {
+            return Ok(new
+            {
+                question1 = _configuration["ChallengeKnowledge:Question1"] ?? "Security question 1",
+                question2 = _configuration["ChallengeKnowledge:Question2"] ?? "Security question 2"
+            });
+        }
+
+        [HttpPost("verify-knowledge")]
+        public IActionResult VerifyKnowledge([FromBody] VerifyKnowledgeDto dto)
+        {
+            var expected1 = _configuration["ChallengeKnowledge:Answer1"] ?? "";
+            var expected2 = _configuration["ChallengeKnowledge:Answer2"] ?? "";
+
+            bool correct =
+                string.Equals(dto.Answer1.Trim(), expected1.Trim(), StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(dto.Answer2.Trim(), expected2.Trim(), StringComparison.OrdinalIgnoreCase);
+
+            if (!correct)
+                return BadRequest(new { error = "Incorrect answers." });
+
+            return Ok();
         }
 
         [Authorize(Roles = "Admin")]

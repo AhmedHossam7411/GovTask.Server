@@ -18,6 +18,12 @@ namespace GovTaskManagement.Infrastructure.Services
             _cache.Set($"suspended:{userId}", expiry, TimeSpan.FromMinutes(minutes));
         }
 
+        public void RevokeUser(string userId)
+        {
+            // No expiry — admin revocation is permanent until service restart
+            _cache.Set($"revoked:{userId}", true);
+        }
+
         public bool IsSuspended(string userId, out TimeSpan remaining)
         {
             if (_cache.TryGetValue($"suspended:{userId}", out DateTime expiry))
@@ -27,6 +33,11 @@ namespace GovTaskManagement.Infrastructure.Services
             }
             remaining = TimeSpan.Zero;
             return false;
+        }
+
+        public bool IsRevoked(string userId)
+        {
+            return _cache.TryGetValue($"revoked:{userId}", out _);
         }
     }
 }

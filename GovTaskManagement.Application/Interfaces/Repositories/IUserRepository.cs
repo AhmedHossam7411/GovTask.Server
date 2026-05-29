@@ -11,5 +11,6 @@ namespace GovTaskManagement.Application.Interfaces.Repositories
     {
         Task<bool> FindByRoleAndDepartmentAsync(string role, int departmentId);
         Task<bool> FindByRoleAsync(string role);
+        Task<User?> GetByApiUserIdAsync(string apiUserId);
     }
 }

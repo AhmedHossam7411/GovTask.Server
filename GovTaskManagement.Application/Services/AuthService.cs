@@ -36,6 +36,9 @@ namespace GovTaskManagement.Application.Services
             if (user is null)
                 return null;
 
+            if (_suspensionService.IsRevoked(user.Id))
+                return new AuthResponseDto { IsAdminRevoked = true };
+
             if (_suspensionService.IsSuspended(user.Id, out var remaining))
                 return new AuthResponseDto { SuspendedUntil = DateTime.UtcNow.Add(remaining) };
 
@@ -46,7 +49,10 @@ namespace GovTaskManagement.Application.Services
             if (!validPassword)
                 return null;
 
-            var accessToken = _jwtGenerator.GenerateToken(user);
+            var appUser = await _unitOfWork.UserRepository.GetByApiUserIdAsync(user.Id);
+            var role = appUser?.Role ?? "User";
+
+            var accessToken = _jwtGenerator.GenerateToken(user, role);
             var refreshToken = Guid.NewGuid().ToString();
             var refreshTokenEntity = new RefreshToken
             {
@@ -57,7 +63,7 @@ namespace GovTaskManagement.Application.Services
             };
             await _unitOfWork.RefreshTokenRepository.AddAsync(refreshTokenEntity);
             await _unitOfWork.SaveChangesAsync();
- 
+
             return new AuthResponseDto
             {
                 AccessToken = accessToken,
@@ -92,6 +98,22 @@ namespace GovTaskManagement.Application.Services
             return token;
 
         }
+        public async Task<string?> RegisterAdminAsync(RegisterRequestDto registerDto)
+        {
+            var existing = await _unitOfWork.ApiUserRepository.SearchByEmailAsync(registerDto.email);
+            if (existing != null) return null;
+
+            var user = new ApiUser { UserName = registerDto.UserName, Email = registerDto.email };
+            var result = await _unitOfWork.ApiUserRepository.CreateUserAsync(user, registerDto.password);
+            if (!result.Succeeded) return null;
+
+            var appUser = new User { ApiUserId = user.Id, Role = "Admin", DepartmentId = null };
+            await _unitOfWork.UserRepository.CreateAsync(appUser);
+            await _unitOfWork.SaveChangesAsync();
+
+            return _jwtGenerator.GenerateToken(user, "Admin");
+        }
+
         public async Task LogoutAsync(string refreshToken)
         {
             if (string.IsNullOrEmpty(refreshToken))
